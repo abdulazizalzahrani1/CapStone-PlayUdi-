@@ -6,5 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
-def home_view(request:HttpRequest):
-    return HttpResponse('Hello')
+def home_view(request: HttpRequest):
+
+    return render(request, "main/home.html")
