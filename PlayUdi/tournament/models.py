@@ -14,9 +14,3 @@ class Match(models.Model):
 class Tournament(models.Model):
     name = models.CharField(max_length=100)
     is_completed = models.BooleanField(default=False)
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    birth_date = models.DateField(default="2000-10-10")
-    avatar = models.ImageField(upload_to="images/", default="images/default.png")
-    # rank
-    # Trophy
