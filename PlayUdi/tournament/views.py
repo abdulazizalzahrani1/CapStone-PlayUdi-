@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Player, Tournament, Match
 import random
+import math
 # Create your views here.
 
 def tournament_view(request: HttpRequest):
@@ -23,11 +24,11 @@ def create_tournament(request):
             players.append(player)
 
         # Randomly assign players to matches for the first round
-
+        rounds = math.log2(num_players)
         random.shuffle(players)
         matches = []
         for i in range(0, num_players, 2):
-            match = Match.objects.create(tournament=tournament, player1=players[i], player2=players[i + 1])
+            match = Match.objects.create(tournament=tournament, player1=players[i], player2=players[i + 1], in_round=rounds)
             matches.append(match)
 
         return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches})
@@ -49,11 +50,22 @@ def select_winner(request, match_id):
         # Check if all matches in the round have winners
         tournament = match.tournament
         round_matches = Match.objects.filter(tournament=tournament, winner=None)
-        if not round_matches:
+        
+
+        if not round_matches and match.in_round > 1:
+                
             # Generate the next round if all matches have winners
             # if is_final_round(tournament):
-            #     return redirect('tournament:show_tournament', tournament_id=match.tournament.id)
-            generate_next_round(tournament)
+                # return redirect('tournament:show_tournament', tournament_id=match.tournament.id)
+            match.in_round = match.in_round -1 
+            if match.in_round >= 1:
+                generate_next_round(tournament)
+                # matchs = Match.objects.all()
+                # for match in matchs:
+                #     match.winner = None
+                #     match.save()
+
+            
     return redirect('tournament:show_tournament', tournament_id=match.tournament.id)
 
 def is_final_round(tournament):
@@ -72,16 +84,20 @@ def is_final_round(tournament):
 
 def generate_next_round(tournament):
     # Retrieve the winners of the current round
-    round_matches = Match.objects.filter(tournament=tournament, winner__isnull=False)
+    round_matches = Match.objects.filter(tournament=tournament)
+    # for match in round_matches:
+    #     if match.in_round 
     winners = [match.winner for match in round_matches]
 
+    rounds = round_matches.first().in_round - 1
     # Create new matches for the next round
     new_matches = []
     for i in range(0, len(winners) - 1, 2):
-        match = Match.objects.create(tournament=tournament, player1=winners[i], player2=winners[i + 1])
+        match = Match.objects.create(tournament=tournament, player1=winners[i], player2=winners[i + 1], in_round= rounds)
         new_matches.append(match)
 
 def show_tournament(request, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)
     matches = Match.objects.filter(tournament=tournament)
-    return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches})
+    match_len = matches.count()
+    return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches, "match_len":match_len})

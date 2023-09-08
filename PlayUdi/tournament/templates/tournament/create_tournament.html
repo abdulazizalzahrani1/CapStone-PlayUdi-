@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block title %}Create Tournament{% endblock %}
+
+{% block content %}
+<h1>Create a New Tournament</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="num_players">Number of Players:</label>
+    <input type="number" name="num_players">
+    <button type="submit">Create Tournament</button>
+</form>
+{% endblock %}
