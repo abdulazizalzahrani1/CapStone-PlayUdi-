@@ -1,1 +1,41 @@
-tournaments
+{% extends "main/base.html" %}
+
+{% block title %}Tournament{% endblock %}
+
+{% block content %}
+<h1>Tournament: {{ tournament.name }}</h1>
+{% if final_match %}
+<h2>The Winner of the Tournament is: {{ tournament.winner.name }}</h2>
+{% endif %}
+{% if matches %}
+    <ol>
+        
+        {% for match in matches %}
+            <li>
+                Match: {{ match.player1.name }} vs. {{ match.player2.name }}
+                {% if not match.winner %}
+                    <form method="post" action="{% url 'tournament:select_winner' match.id %}">
+                        {% csrf_token %}
+                        <label for="winner">Select Winner:</label>
+                        <select name="winner">
+                            <option value="{{ match.player1.id }}">{{ match.player1.name }}</option>
+                            <option value="{{ match.player2.id }}">{{ match.player2.name }}</option>
+                        </select>
+                        <button type="submit">Submit Winner</button>
+                    </form>
+                    
+                {% else %}
+                    Winner: {{ match.winner.name }}
+                {% endif %}
+            </li>
+            <hr>
+            {% endfor %}
+        </ol>
+        <hr>
+        <hr>
+        <hr>
+        {% else %}
+    <p>No matches available.</p>
+    <a href="{% url 'tournament:create_tournament' %}"> create tournament</a>
+{% endif %}
+{% endblock %}
