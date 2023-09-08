@@ -2,7 +2,7 @@
 
 {% block title %} New User Registeration {% endblock%}
 
-{% block con %}
+{% block content %}
 
     <section class="regiser">
 
@@ -12,7 +12,7 @@
             <h2>Register</h2>
 
 
-            <form action="{% url 'accounts:register_user_view' %}" method="post" >
+            <form action="{% url 'accounts:register_user_view' %}" enctype="multipart/form-data" method="post" >
                 {% csrf_token %}
 
                 <input type="text" name="first_name" class="form-control mt-2 " placeholder="First Name" />
@@ -21,6 +21,17 @@
                 <input type="email" name="email" class="form-control mt-2" placeholder="Email Address" />
                 <input type="password" name="password" class="form-control mt-2" placeholder="Password" />
 
+                <div class="form-floating mt-2">
+                    <input type="date" class="form-control" id="floatingInput" placeholder="Birth Date" name="birth_date">
+                    <label for="floatingInput">Birth Date</label>
+                </div>
+
+
+                <div class="mt-2">
+                    <label for="floatingAvatar">Avatar</label>
+                    <input type="file" accept="image/png, image/jpg" class="form-control" id="floatingAvatar" placeholder="avatar" name="avatar"> 
+                </div>
+                    
                 <input type="submit" value="Register" class="btn btn-primary mt-4" />
 
             </form>
