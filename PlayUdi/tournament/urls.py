@@ -5,4 +5,8 @@ app_name = "tournament"
 
 urlpatterns = [
     path("", views.tournament_view, name="tournament_view"),
+    path('createTournament', views.create_tournament, name="create_tournament"),
+    path('<int:tournament_id>/', views.show_tournament, name='show_tournament'),
+    path('<int:match_id>/select_winner/', views.select_winner, name='select_winner'),
+
 ]
