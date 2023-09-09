@@ -4,23 +4,37 @@ from django.contrib.auth.models import User
 from tournament.models import Profile
 from django.contrib.auth import authenticate, login, logout
 
+
 # Create your views here.
 
 
 def register_user_view(request : HttpRequest):
 
     if request.method == "POST":
-        new_user = User.objects.create_user(first_name=request.POST["first_name"], last_name=request.POST["last_name"], username=request.POST["username"], email=request.POST["email"], password=request.POST["password"], )
-        new_user.save()
+        if request.POST["states"] == "1":
+            new_user = User.objects.create_user(first_name=request.POST["first_name"], last_name=request.POST["last_name"], username=request.POST["username"], email=request.POST["email"], password=request.POST["password"])
+            new_user.save()
+    
+            user_porifle = Profile(user=new_user,birth_date=request.POST["birth_date"], states=request.POST["states"])
+            if "avatar" in request.FILES:
+                    user_porifle.avatar = request.FILES["avatar"]
+                    user_porifle.save()
+            return redirect("accounts:login_user_view")
         
-        
-        
-        user_porifle = Profile(user=new_user,birth_date=request.POST["birth_date"])
-        if "avatar" in request.FILES:
-                user_porifle.avatar = request.FILES["avatar"]
-                user_porifle.save()
+        elif request.POST["states"] == "2":
+            new_user = User.objects.create_user(first_name=request.POST["first_name"], last_name=request.POST["last_name"], username=request.POST["username"], email=request.POST["email"], password=request.POST["password"])
+            new_user.is_active = False
+            new_user.save()
+            
+    
+            user_porifle = Profile(user=new_user,birth_date=request.POST["birth_date"], states=request.POST["states"])
+            if "avatar" in request.FILES:
+                    user_porifle.avatar = request.FILES["avatar"]
+                    user_porifle.save()
 
-        return redirect("accounts:login_user_view")
+                    
+            return redirect("accounts:login_user_view")
+
 
     return render(request, "accounts/register.html")
 
@@ -28,7 +42,7 @@ def register_user_view(request : HttpRequest):
 def login_user_view(request: HttpRequest):
 
     msg = None
-
+    
     if request.method == "POST":
         user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
 
@@ -75,3 +89,7 @@ def update_profile_page(request:HttpRequest, user_id):
     
     return render(request, "accounts/update_profile.html", {"profile" : profile})
   
+
+
+
+
