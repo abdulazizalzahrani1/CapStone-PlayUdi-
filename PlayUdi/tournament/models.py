@@ -6,13 +6,17 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
 
 class Profile(models.Model):
-    user_choices = ((1, "user"), (2, "company"))
+    user_choices = (("1", "user"), ("2", "company"))
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(default="2000-10-10")
     avatar = models.ImageField(upload_to="images/", default="images/default.png")
-    states = models.CharField(max_length=160,choices=user_choices, default=1)
+    states = models.CharField(max_length=160,choices=user_choices, default="1")
     # rank
     # Trophy
+
+
+
+
 
 # Create your models here.
 class Player(models.Model):
