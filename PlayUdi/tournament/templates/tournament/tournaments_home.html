@@ -1,4 +1,4 @@
-{% extends "main/base.html" %}
+{% extends 'main/base.html' %}
 
 {% block title %}Tournament{% endblock %}
 
@@ -9,8 +9,9 @@
 {% endif %}
 {% if matches %}
     <ol>
-        
+
         {% for match in matches %}
+        <p>{{match.in_round}}</p>
             <li>
                 Match: {{ match.player1.name }} vs. {{ match.player2.name }}
                 {% if not match.winner %}
@@ -23,7 +24,6 @@
                         </select>
                         <button type="submit">Submit Winner</button>
                     </form>
-                    
                 {% else %}
                     Winner: {{ match.winner.name }}
                 {% endif %}
