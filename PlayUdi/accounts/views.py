@@ -18,7 +18,7 @@ def register_user_view(request : HttpRequest):
             user_porifle = Profile(user=new_user,birth_date=request.POST["birth_date"], states=request.POST["states"])
             if "avatar" in request.FILES:
                     user_porifle.avatar = request.FILES["avatar"]
-                    user_porifle.save()
+            user_porifle.save()
             return redirect("accounts:login_user_view")
         
         elif request.POST["states"] == "2":
@@ -30,7 +30,7 @@ def register_user_view(request : HttpRequest):
             user_porifle = Profile(user=new_user,birth_date=request.POST["birth_date"], states=request.POST["states"])
             if "avatar" in request.FILES:
                     user_porifle.avatar = request.FILES["avatar"]
-                    user_porifle.save()
+            user_porifle.save()
 
                     
             return redirect("accounts:login_user_view")

@@ -14,7 +14,8 @@ class Profile(models.Model):
     # rank
     # Trophy
 
-
+    def __str__(self) -> str:
+        return f"{self.user}"
 
 
 
@@ -22,13 +23,25 @@ class Profile(models.Model):
 class Player(models.Model):
     name = models.CharField(max_length=100)
 
-class Match(models.Model):
-    tournament = models.ForeignKey('Tournament', on_delete=models.CASCADE)
-    player1 = models.ForeignKey(Player, related_name='matches_as_player1', on_delete=models.CASCADE)
-    player2 = models.ForeignKey(Player, related_name='matches_as_player2', on_delete=models.CASCADE)
-    winner = models.ForeignKey(Player, null=True, blank=True, on_delete=models.CASCADE)
-    in_round = models.IntegerField(max_length=64, default=0)
 
 class Tournament(models.Model):
     name = models.CharField(max_length=100)
+    number_of_players=models.IntegerField()
     is_completed = models.BooleanField(default=False)
+    owner=models.ForeignKey(Profile , on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+class Match(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    player1 = models.ForeignKey(Profile, related_name='matches_as_player1', on_delete=models.CASCADE)
+    player2 = models.ForeignKey(Profile, related_name='matches_as_player2', on_delete=models.CASCADE)
+    winner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
+    in_round = models.IntegerField( default=0)
+    
+
+class TournamentPlayers(models.Model):
+    tourmnet=models.ForeignKey(Tournament,on_delete=models.CASCADE)
+    player=models.ForeignKey(Profile,on_delete=models.CASCADE)
+

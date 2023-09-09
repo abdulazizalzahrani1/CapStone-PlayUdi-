@@ -7,35 +7,47 @@
 {% if final_match %}
 <h2>The Winner of the Tournament is: {{ tournament.winner.name }}</h2>
 {% endif %}
+{% for tourmnet in touremnts  %}
+    <h5>{{tourmnet.name}}</h5>
+    <h5>{{tourmnet.id}}</h5>
+    {% for player in tourmnet.tournamentplayers_set.all%}
+        <h5>{{player}}</h5>
+    {%endfor%}
+
+    <a href="{% url 'tournament:enroll_view' tourmnet.id %}"> enroll </a>
+    <br>
+    <a href="{% url 'tournament:tournament_controll' tourmnet.id %}"> controll </a>
+{% endfor %}
 {% if matches %}
     <ol>
 
         {% for match in matches %}
         <p>{{match.in_round}}</p>
             <li>
-                Match: {{ match.player1.name }} vs. {{ match.player2.name }}
+                Match: {{ match.player1.user.username }} vs. {{ match.player2.user.username }}
                 {% if not match.winner %}
                     <form method="post" action="{% url 'tournament:select_winner' match.id %}">
                         {% csrf_token %}
                         <label for="winner">Select Winner:</label>
                         <select name="winner">
-                            <option value="{{ match.player1.id }}">{{ match.player1.name }}</option>
-                            <option value="{{ match.player2.id }}">{{ match.player2.name }}</option>
+                            <option value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
+                            <option value="{{ match.player2.user.id }}">{{ match.player2.user.username }}</option>
                         </select>
                         <button type="submit">Submit Winner</button>
                     </form>
                 {% else %}
-                    Winner: {{ match.winner.name }}
+                    Winner: {{ match.winner.user.username }}
                 {% endif %}
             </li>
             <hr>
             {% endfor %}
         </ol>
         <hr>
-        <hr>
-        <hr>
-        {% else %}
+
+        {% else %} 
     <p>No matches available.</p>
+    {% if request.user.profile.states == '2' %}
     <a href="{% url 'tournament:create_tournament' %}"> create tournament</a>
+    {%endif%}
 {% endif %}
 {% endblock %}
