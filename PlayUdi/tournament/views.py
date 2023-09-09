@@ -52,14 +52,11 @@ def select_winner(request, match_id):
         round_matches = Match.objects.filter(tournament=tournament, winner=None)
         
 
-        if not round_matches and match.in_round > 1:
-                
+        if not round_matches:
+            generate_next_round(tournament, match.in_round)
             # Generate the next round if all matches have winners
             # if is_final_round(tournament):
                 # return redirect('tournament:show_tournament', tournament_id=match.tournament.id)
-            match.in_round = match.in_round -1 
-            if match.in_round >= 1:
-                generate_next_round(tournament)
                 # matchs = Match.objects.all()
                 # for match in matchs:
                 #     match.winner = None
@@ -82,19 +79,30 @@ def is_final_round(tournament):
     # Check if the current round is the final round
     return rounds_played == num_rounds
 
-def generate_next_round(tournament):
+from django.db.models import F
+
+def generate_next_round(tournament, in_round):
     # Retrieve the winners of the current round
-    round_matches = Match.objects.filter(tournament=tournament)
-    # for match in round_matches:
-    #     if match.in_round 
+    round_matches = Match.objects.filter(tournament=tournament, in_round=in_round)
     winners = [match.winner for match in round_matches]
 
-    rounds = round_matches.first().in_round - 1
+    rounds = in_round - 1  # change the round number for the next round
+
     # Create new matches for the next round
     new_matches = []
-    for i in range(0, len(winners) - 1, 2):
-        match = Match.objects.create(tournament=tournament, player1=winners[i], player2=winners[i + 1], in_round= rounds)
-        new_matches.append(match)
+    for i in range(0, len(winners), 2):
+        # Ensure there are at least two winners left to create a match
+        if i + 1 < len(winners):
+            match = Match.objects.create(
+                tournament=tournament,
+                player1=winners[i],
+                player2=winners[i + 1],
+                in_round=rounds
+            )
+            new_matches.append(match)
+
+    return new_matches
+
 
 def show_tournament(request, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)
