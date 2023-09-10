@@ -154,7 +154,7 @@ def show_tournament_details(request:HttpRequest, tourment_id):
         new_comment = Comment(tournament=tournament, profile=profile_user, content=request.POST["content"])
         new_comment.save()
     match_len = matches.count()
-    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comment":comment})
+    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comment})
 
 
 def show_tournament(request, tournament_id):
