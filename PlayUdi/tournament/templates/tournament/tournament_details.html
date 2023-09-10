@@ -1,23 +1,8 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Tournament{% endblock %}
-
+{% block title %}Tournament Details{% endblock %}
 {% block content %}
-<h1>Tournament: {{ tournament.name }}</h1>
-{% if final_match %}
-<h2>The Winner of the Tournament is: {{ tournament.winner.name }}</h2>
-{% endif %}
-{% for tourmnet in touremnts  %}
-    <h5>{{tourmnet.name}}</h5>
-    <h5>{{tourmnet.id}}</h5>
-    {% for player in tourmnet.tournamentplayers_set.all%}
-        <h5>{{player}}</h5>
-    {%endfor%}
 
-    <a href="{% url 'tournament:enroll_view' tourmnet.id %}"> enroll </a>
-    <br>
-    <a href="{% url 'tournament:tournament_controll' tourmnet.id %}"> controll </a>
-{% endfor %}
 {% if matches %}
     <ol>
 
@@ -51,4 +36,10 @@
     {%endif%}
 {% endif %}
 
+<h1>Add Comment</h1>
+<form action="{% url 'tournament:show_tournament_details' tournament.id %}" method="post" >
+    {% csrf_token %}
+    <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+    <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+</form>
 {% endblock %}

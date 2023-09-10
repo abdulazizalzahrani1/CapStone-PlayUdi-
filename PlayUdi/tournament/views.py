@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Player, Tournament, Match,Profile,TournamentPlayers
 from django.contrib.auth.models import User
+from comment.models import Comment
 
 import random
 import math
@@ -138,6 +139,19 @@ def generate_next_round(tournament, in_round):
             new_matches.append(match)
 
     return new_matches
+
+
+def show_tournament_details(request:HttpRequest, tourment_id):
+    tournament = Tournament.objects.get(id=tourment_id)
+    matches = Match.objects.filter(tournament=tournament)
+    comment = Comment.objects.filter(tournament=tournament)
+    profile_user = Profile.objects.get(user=request.user)
+
+    if request.method == "POST" and request.user.is_authenticated:
+        new_comment = Comment(tournament=tournament, profile=profile_user, content=request.POST["content"])
+        new_comment.save()
+    match_len = matches.count()
+    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comment":comment})
 
 
 def show_tournament(request, tournament_id):
