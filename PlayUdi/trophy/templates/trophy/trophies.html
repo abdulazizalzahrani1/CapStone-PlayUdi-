@@ -5,5 +5,20 @@
 {% block content %}
 <h1>Trophies</h1>
 
+  <div class="row">
+    {% for trophy in trophies %}
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <img src="{{ trophy.image.url }}" class="card-img-top" alt="{{ trophy.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ trophy.name }}</h5>
+            <p class="card-text">{{ trophy.description }}</p>
+            <p class="card-text"><strong>Points:</strong> {{ trophy.points }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
 <a href="{% url 'trophy:add_trophy_view' %}"> add trophy </a>
 {% endblock%}
