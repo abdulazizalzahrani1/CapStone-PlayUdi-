@@ -154,7 +154,7 @@ def enroll_view(request : HttpRequest,tourment_id):
         return HttpResponse('Full')
     user_profile=Profile.objects.get(user=request.user)
     
-    if user_profile.states==2 :
+    if user_profile.states=='2' :
         return HttpResponse("Not alloed to enroll")
     else :
         if TournamentPlayers.objects.filter(tourmnet=tourment,player=user_profile).exists():
