@@ -25,4 +25,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls'),name='accounts'),
     path('tournaments/',include('tournament.urls'),name='tournament'),
     path('trophy/',include('trophy.urls'),name='trophy'),
+    path('comment/', include('comment.urls'), name='comments'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

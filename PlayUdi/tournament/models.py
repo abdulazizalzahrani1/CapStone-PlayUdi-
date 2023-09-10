@@ -11,6 +11,7 @@ class Profile(models.Model):
     birth_date = models.DateField(default="2000-10-10")
     avatar = models.ImageField(upload_to="images/", default="images/default.png")
     states = models.CharField(max_length=160,choices=user_choices, default="1")
+    # bio = models.TextField(max_length=256)
     # rank
     # Trophy
 
