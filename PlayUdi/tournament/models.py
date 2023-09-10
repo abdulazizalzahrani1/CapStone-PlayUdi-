@@ -7,10 +7,12 @@ class Player(models.Model):
 
 class Profile(models.Model):
     user_choices = (("1", "user"), ("2", "company"))
+    user_rank =((1000, 'pro'), (1500, 'master'), (2000, 'champion'), (3000, 'Grand Champion'))
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(default="2000-10-10")
     avatar = models.ImageField(upload_to="images/", default="images/default.png")
     states = models.CharField(max_length=160,choices=user_choices, default="1")
+    points = models.IntegerField(default=0)
     # bio = models.TextField(max_length=256)
     # rank
     # Trophy

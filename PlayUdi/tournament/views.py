@@ -182,6 +182,9 @@ def enroll_view(request : HttpRequest,tourment_id):
             return HttpResponse("player enrolled ",tourment.number_of_players)
         
 
-                 
-    print(request.user.is_authenticated  )
-    return HttpResponse('Hello')
+def announce_winner(request: HttpRequest, tournament_id):
+    tournament = Tournament.objects.get(id=tournament_id)
+
+
+
+    
