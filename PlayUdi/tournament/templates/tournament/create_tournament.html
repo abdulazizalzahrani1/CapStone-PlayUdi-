@@ -5,8 +5,29 @@
 <h1>Create a New Tournament</h1>
 <form method="post">
     {% csrf_token %}
-    <label for="num_players">Number of Players:</label>
-    <input type="number" name="num_players">
+    <input type="text" name="name" class="form-control mt-2 " placeholder="Tournament Name" value="{{request.user}} Tourmnet "/>
+
+    <br>
+    <label>Game:  </label>
+    <select name="game" class="form-select">
+        {% for value, x in Tournament.user_choices_games %}
+            <option value="{{value}}">{{x}}</option>
+        {% endfor %}
+    </select>
+    <label>Trophy:  </label>
+    <select name="trpoy_for_tourment" class="form-select">
+        {% for value, x in Tournament.user_choices_trpoy %}
+            <option value="{{value}}">{{x}}</option>
+        {% endfor %}
+    </select>
+    <label>Number of players :  </label>
+    <select name="number_of_players" class="form-select">
+        {% for value, x in Tournament.user_choices %}
+            <option value="{{value}}">{{x}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    
     <button type="submit">Create Tournament</button>
 </form>
 {% endblock %}

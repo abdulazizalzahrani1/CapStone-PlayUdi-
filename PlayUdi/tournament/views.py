@@ -54,14 +54,18 @@ def tournament_controll(request :HttpRequest, tourment_id):
 def create_tournament(request : HttpRequest):
     if request.method == 'POST':
         # Get the number of players from the form
-        num_players = int(request.POST['num_players']) 
+        num_players = request.POST['number_of_players'] 
+        name= request.POST['name']
+        game= request.POST['game']
+        trpoy_for_tourment= request.POST['trpoy_for_tourment']
         profile=Profile.objects.get(user=request.user)
+
         if profile.states =='1':
             return HttpResponse("Youre not Allowed to create a tour")
         # Create a new tournament
-        tournament = Tournament.objects.create(name="My Tournament" , number_of_players=num_players,owner=profile)
+        tournament = Tournament.objects.create(name=name , number_of_players=num_players,owner=profile,game=game,trpoy_for_tourment=trpoy_for_tourment)
 
-    return render(request, 'tournament/create_tournament.html')
+    return render(request, 'tournament/create_tournament.html',{'Tournament':Tournament})
 
 def select_winner(request, match_id):
 
@@ -93,10 +97,9 @@ def select_winner(request, match_id):
                 #     match.winner = None
                 #     match.save()
 
-        if match.in_round==1:
+        if match.in_round==1 and tournament.is_completed==False:
             tournament.is_completed=True
             # winner.add_score 
-
             tournament.save()
 
             
