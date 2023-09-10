@@ -37,6 +37,10 @@
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="{% url 'accounts:profile_page' request.user.id %}">Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'accounts:update_profile_page' request.user.id %}">Update Profile</a></li>
+                  {% if request.user.is_staff %}
+                  <li><a class="dropdown-item" href="{% url 'trophy:trophy_view' %}">Trophy</a></li>
+                  {% endif %}
+
 
                   <li><a class="dropdown-item" href="#">Another action</a></li>
                   <li><hr class="dropdown-divider"></li>

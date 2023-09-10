@@ -35,6 +35,16 @@
     <a href="{% url 'tournament:create_tournament' %}"> create tournament</a>
     {%endif%}
 {% endif %}
+<div class="row">
+    {% for comment in comments %}
+    <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+        <img src="{{comment.profile.avatar.url}}" width="40px" height="35px">
+        <h4>{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}</h4>
+        <p>{{comment.content}}</p>
+
+    </div>
+    {% endfor%}
+</div>
 
 <h1>Add Comment</h1>
 <form action="{% url 'tournament:show_tournament_details' tournament.id %}" method="post" >
