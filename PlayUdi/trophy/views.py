@@ -19,7 +19,7 @@ def add_trophy_view(request: HttpRequest) -> HttpResponse:
         )
         trophy.save()
 
-        return redirect('trophy_detail', pk=trophy.pk)  # Replace 'trophy_detail' with your desired URL name
+        return redirect('trophy:trophy_view')  # Replace 'trophy_detail' with your desired URL name
 
 
     return render(request, 'trophy/add_trophy.html')
