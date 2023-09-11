@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+
+{% block title %} admin {% endblock%}
+
+{% block content %}
+<div class="row">
+  <div class="dropdown  pt-5">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      users
+    </button>
+    <ul class="dropdown-menu ">
+        {% for profile in profiles %} 
+          {%if profile.states == '1' %}
+
+          <li><a class="dropdown-item" href="">{{profile.user.username}}</a></li>
+          {%endif%}
+      {% endfor %}
+    </ul>
+  </div>
+<div class="dropdown  pt-5">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Company
+    </button>
+    <ul class="dropdown-menu ">
+        {% for profile in profiles %} 
+          {%if profile.states == '2' %}
+
+          <li><a class="dropdown-item" href="">{{profile.user.username}}</a></li>
+          {%endif%}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+  
+  {% for tourmnet in touremnts  %}
+    <h5>{{tourmnet.name}}</h5>
+    <h5>{{tourmnet.id}}</h5>
+    {% for player in tourmnet.tournamentplayers_set.all%}
+        <h5>{{player}}</h5>
+    {%endfor%}
+
+    <a href="{% url 'tournament:enroll_view' tourmnet.id %}"> enroll </a>
+    <br>
+    <a href="{% url 'tournament:tournament_controll' tourmnet.id %}"> controll </a>
+    {% endfor %}
+   
+
+
+{% endblock%}

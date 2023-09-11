@@ -4,10 +4,22 @@
 
 {% block content %}
    <div class="profileDetails">
-    <img src="{{profile.avatar.url}}" class="avatar" width="180px" height="180px">
-    <div class="profileAccount">
-        <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>
-        <h1>@{{profile.user.username}}</h1>
+       
+       <img src="{{profile.avatar.url}}" class="avatar" width="180px" height="180px">
+       <div class="profileAccount">
+           <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>
+           <h1>@{{profile.user.username}}</h1>
+           <h1>Points : {{profile.points}}</h1>
+           
+        </div>
+        {% if profile.states == '1' %}
+        {% for trophy in trophies %}
+            <div class="card">
+            {{ trophy.tournament.name }}        
+            </div>
+        {% endfor %}
+        {% else %}
+
+        {% endif %}
     </div>
-   </div>
 {% endblock%}

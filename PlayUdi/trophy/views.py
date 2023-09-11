@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Trophy
+from tournament.models import Trophy
 
 # Create your views here.
 

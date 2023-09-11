@@ -2,10 +2,8 @@
 
 {% block title %}Tournament Details{% endblock %}
 {% block content %}
-
 {% if matches %}
     <ol>
-
         {% for match in matches %}
         <p>{{match.in_round}}</p>
             <li>
@@ -26,6 +24,9 @@
             </li>
             <hr>
             {% endfor %}
+            {% if tournament.is_completed %}
+                <h2 class="row justify-content-around">completed</h2>
+            {% endif %}
         </ol>
         <hr>
 
@@ -35,21 +36,41 @@
     <a href="{% url 'tournament:create_tournament' %}"> create tournament</a>
     {%endif%}
 {% endif %}
-<div class="row">
-    {% for comment in comments %}
-    <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
-        <img src="{{comment.profile.avatar.url}}" width="40px" height="35px">
-        <h4>{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}</h4>
-        <p>{{comment.content}}</p>
 
+<nav class="sidebar">
+    <header>
+        <h2>Codehal</h2>
+    </header>
+    <footer>
+        <h1>Add Comment</h1>
+        <form action="{% url 'tournament:show_tournament_details' tournament.id %}" method="post" >
+            {% csrf_token %}
+            <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+            <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+        </form>
+    </footer>
+    <div class="scrollbox">
+        <div class="scrollbox-inner">
+            <p>
+                <div class="row d-flex" style="flex-direction: column-reverse;">
+                    {% for comment in comments %}
+                    <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+                        <div class="d-flex flex-row gap-3">
+                            <img src="{{comment.profile.avatar.url}}" width="40px" height="35px" style="border-radius: 50%;">
+                            <h4>@{{comment.profile.user.username}}</h4>
+                        </div>
+                        <p class="mt-2">{{comment.content}}</p>
+                
+                    </div>
+                    {% endfor%}
+                </div>
+            </p>
+
+        </div>
     </div>
-    {% endfor%}
-</div>
+    
+</nav>
 
-<h1>Add Comment</h1>
-<form action="{% url 'tournament:show_tournament_details' tournament.id %}" method="post" >
-    {% csrf_token %}
-    <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
-    <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
-</form>
+
+
 {% endblock %}
