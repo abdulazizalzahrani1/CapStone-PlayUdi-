@@ -26,6 +26,7 @@
                         <li class="list-group-item">{{ player.player.user.first_name }}</li>
                         {% endfor %}
                     </ul>
+
                     {% if tournament.number_of_players != 0 %}
                     <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn btn-primary mt-2">Enroll</a>
                     {% else %}
@@ -34,43 +35,15 @@
                     <a href="{% url 'tournament:tournament_controll' tournament.id %}" class="btn btn-secondary mt-2">Controll</a>
                 </div>
             </div>
+            <a href="{% url 'tournament:show_tournament_details' tournament.id %}" class="btn btn-primary mt-2">Deatails</a>
+
         </div>
         {% endfor %}
+        {% if request.user.profile.states == '2' %}
+        <a href="{% url 'tournament:create_tournament' %}" class="btn btn-primary">Create Tournament</a>
+        {% endif %}
     </div>
 
-    {% if matches %}
-    <h2 class="mt-4">Matches</h2>
-    <ol class="list-group">
-        {% for match in matches %}
-        <li class="list-group-item">
-            <p>Round: {{ match.in_round }}</p>
-            <p>Match: {{ match.player1.user.username }} vs. {{ match.player2.user.username }}</p>
-            {% if not match.winner %}
-            <form method="post" action="{% url 'tournament:select_winner' match.id %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="winner">Select Winner:</label>
-                    <select class="form-control" name="winner">
-                        <option value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
-                        <option value="{{ match.player2.user.id }}">{{ match.player2.user.username }}</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success">Submit Winner</button>
-            </form>
-            {% else %}
-            <p>Winner: {{ match.winner.user.username }}</p>
-            {% endif %}
-        </li>
-        {% endfor %}
-        {% if tournament.winner %}
-        <h2>Winner of this tournament : {{ tournament.winner.user.first_name }}</h2>
-        {% endif %}
-    </ol>
-    {% else %}
-    <p>No matches available.</p>
-    {% if request.user.profile.states == '2' %}
-    <a href="{% url 'tournament:create_tournament' %}" class="btn btn-primary">Create Tournament</a>
-    {% endif %}
-    {% endif %}
+
 </div>
 {% endblock %}

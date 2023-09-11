@@ -9,6 +9,7 @@
             <li>
                 Match: <div class="card" style="width: 18rem;">{{ match.player1.user.username }}</div> vs. <div class="card" style="width: 18rem;">{{ match.player2.user.username }}</div>
                 {% if not match.winner %}
+                    {% if match.tournament.owner.user == request.user%}
                     <form method="post" action="{% url 'tournament:select_winner' match.id %}">
                         {% csrf_token %}
                         <label for="winner">Select Winner:</label>
@@ -18,6 +19,7 @@
                         </select>
                         <button type="submit">Submit Winner</button>
                     </form>
+                {%endif%}
                 {% else %}
                     Winner: {{ match.winner.user.username }}
                 {% endif %}
@@ -31,10 +33,8 @@
         <hr>
 
         {% else %} 
-    <p>No matches available.</p>
-    {% if request.user.profile.states == '2' %}
-    <a href="{% url 'tournament:create_tournament' %}"> create tournament</a>
-    {%endif%}
+
+
 {% endif %}
 
 <div>

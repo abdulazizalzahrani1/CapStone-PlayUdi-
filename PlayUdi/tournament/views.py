@@ -24,25 +24,9 @@ def tournament_controll(request :HttpRequest, tournament_id):
         if  tournament.number_of_players !=0 and not matches:        
             return HttpResponse(tournament_players)
         elif matches and tournament.number_of_players ==0:
-            return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches})
+            return redirect( 'tournament:show_tournament_details',tournament_id)
 
-        players = []
-        for i in range(len(tournament_players)):           
-            players.append(tournament_players[i].player.user.id)
-        
-        # Randomly assign players to matches for the first round
-        rounds = math.log2(len(players))
-        random.shuffle(players)
-        matches = []
-        for i in range(0, len(players), 2):
-            get_user=User.objects.get(id=players[i])
-            get_user2=User.objects.get(id=players[i+1])
-            players1=Profile.objects.get(user=get_user)
-            players2=Profile.objects.get(user=get_user2)
-            match = Match.objects.create(tournament=tournament, player1=players1, player2=players2, in_round=rounds)
-            matches.append(match)
-
-        return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches})
+        return redirect( 'tournament:show_tournament_details',tournament_id)
 
 
 def create_tournament(request : HttpRequest):
@@ -137,12 +121,6 @@ def show_tournament_details(request:HttpRequest, tournament_id):
     return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comment})
 
 
-def show_tournament(request, tournament_id):
-    tournament = Tournament.objects.get(id=tournament_id)
-    matches = Match.objects.filter(tournament=tournament)
-    match_len = matches.count()
-    return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches, "match_len":match_len})
-
 
 
 def enroll_view(request : HttpRequest,tournament_id):
@@ -162,6 +140,26 @@ def enroll_view(request : HttpRequest,tournament_id):
             tournament.number_of_players-=1
             tournament.save()
             user_enrolled_in.save()
+            if tournament.number_of_players ==0 :
+                tournament_players=TournamentPlayers.objects.filter(tournament_id=tournament_id)
+
+                matches = Match.objects.filter(tournament=tournament)
+                players = []
+                for i in range(len(tournament_players)):           
+                    players.append(tournament_players[i].player.user.id)
+                
+                # Randomly assign players to matches for the first round
+                rounds = math.log2(len(players))
+                random.shuffle(players)
+                matches = []
+                for i in range(0, len(players), 2):
+                    get_user=User.objects.get(id=players[i])
+                    get_user2=User.objects.get(id=players[i+1])
+                    players1=Profile.objects.get(user=get_user)
+                    players2=Profile.objects.get(user=get_user2)
+                    match = Match.objects.create(tournament=tournament, player1=players1, player2=players2, in_round=rounds)
+                    matches.append(match)
+
             return redirect('tournament:tournament_view')
 
 
