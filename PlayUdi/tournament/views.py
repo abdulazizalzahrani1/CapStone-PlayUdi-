@@ -26,9 +26,6 @@ def tournament_controll(request :HttpRequest, tournament_id):
         elif matches and tournament.number_of_players ==0:
             return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches})
 
-        # return HttpResponse(tournament_players[1].player.user.id)
-        
-            # Create players and matches for the first round
         players = []
         for i in range(len(tournament_players)):           
             players.append(tournament_players[i].player.user.id)
@@ -45,7 +42,7 @@ def tournament_controll(request :HttpRequest, tournament_id):
             match = Match.objects.create(tournament=tournament, player1=players1, player2=players2, in_round=rounds)
             matches.append(match)
 
-        return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches})
+        return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches})
 
 
 def create_tournament(request : HttpRequest):
@@ -87,7 +84,7 @@ def select_winner(request, match_id):
             winner.points += int(trophy.points)
             trophy.save()
             winner.save()
-            return redirect('main:home_view')
+            return redirect('tournament:show_tournament_details',tournament_id=match.tournament.id)
         if not round_matches:
             generate_next_round(tournament, match.in_round)
             
@@ -95,7 +92,7 @@ def select_winner(request, match_id):
             
 
             
-    return redirect('tournament:show_tournament', tournament_id=match.tournament.id)
+    return redirect('tournament:show_tournament_details', tournament_id=match.tournament.id)
 
 
 def generate_next_round(tournament, in_round):
