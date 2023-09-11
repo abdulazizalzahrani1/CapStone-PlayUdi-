@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.models import User
-from tournament.models import Profile, Trophy
+from tournament.models import Profile, Trophy, Tournament
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -92,6 +92,14 @@ def update_profile_page(request:HttpRequest, user_id):
         return redirect("accounts:profile_page", user_id=user_id)
     
     return render(request, "accounts/update_profile.html", {"profile" : profile})
+
+
+def user_admin_view(request: HttpRequest):
+     users = User.objects.all()
+     profiles= Profile.objects.all()
+     touremnts=Tournament.objects.all()
+     
+     return render(request, "accounts/user_admin.html",context = {"users" :users ,"profiles":profiles,"touremnts":touremnts})  
   
 
 
