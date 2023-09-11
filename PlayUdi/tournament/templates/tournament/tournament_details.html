@@ -9,7 +9,7 @@
         {% for match in matches %}
         <p>{{match.in_round}}</p>
             <li>
-                Match: {{ match.player1.user.username }} vs. {{ match.player2.user.username }}
+                Match: <div class="card" style="width: 18rem;">{{ match.player1.user.username }}</div> vs. <div class="card" style="width: 18rem;">{{ match.player2.user.username }}</div>
                 {% if not match.winner %}
                     <form method="post" action="{% url 'tournament:select_winner' match.id %}">
                         {% csrf_token %}
