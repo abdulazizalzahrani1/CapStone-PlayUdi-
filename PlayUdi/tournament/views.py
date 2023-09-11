@@ -61,7 +61,7 @@ def create_tournament(request : HttpRequest):
         return redirect('tournament:tournament_view')
     return render(request, 'tournament/create_tournament.html',{'Tournament':Tournament})
 
-def select_winner(request, match_id):
+def select_winner(request:HttpRequest, match_id):
 
     match = Match.objects.get(id=match_id)
 
@@ -82,6 +82,12 @@ def select_winner(request, match_id):
             trophy = Trophy(tournament=tournament, winner=winner, points=tournament.trophy_for_tournament)
 
             winner.points += int(trophy.points)
+            if winner.points > 500:
+                winner.user_rank = 'master'
+            elif winner.points > 300:
+                winner.user_rank = 'pro'
+            else:
+                winner.user_rank = 'nor'
             trophy.save()
             winner.save()
             return redirect('tournament:show_tournament_details',tournament_id=match.tournament.id)
