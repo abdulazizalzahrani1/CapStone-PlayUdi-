@@ -20,7 +20,7 @@
                     <i class="fas fa-gamepad"></i>
                     <p>PlayUdi</p>
                 </div>
-                <ul class="navbar navbar-expand-lg">
+                <ul style="display: flex;justify-content: start;" class="navbar navbar-expand-lg">
                     <div class="container-fluid">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                           <span class="navbar-toggler-icon"></span>
@@ -33,9 +33,9 @@
                             <li class="nav-item">
                               <a class="nav-link" href="{% url 'tournament:tournament_view'%}">tournament</a>
                             </li>
-                            {% if request.user.is_authenticated  %}
+                            {% if request.user.is_authenticated%}
                             <li class="nav-item dropdown">
-                              <a  class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <a  class="nav-link dropdown-toggle " style="color: #fff;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Account
                               </a>
                               <ul  class="dropdown-menu bg-black">
@@ -44,8 +44,6 @@
                                 {% if request.user.is_staff %}
                                 <li><a class="dropdown-item" href="{% url 'trophy:trophy_view' %}">Trophy</a></li>
                                 {% endif %}
-    
-              
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'accounts:logout_user_view'%}">Logout</a></li>
@@ -60,9 +58,11 @@
                             </li>
                             {% endif %}
                             <div style="right: 0; margin-right: -12px;">
-                            <button type="button" id="btn"><i class="fas fa-play"></i>PLAY NOW</button>
                         </div>
+                        
                           </ul>
+                          <button type="button" id="btn"><i class="fas fa-play"></i>PLAY NOW</button>
+
             </header>
 
             {% block content %}
