@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Player, Tournament, Match,Profile,TournamentPlayers
+from .models import Player, Tournament, Match, Profile,TournamentPlayers, Trophy
+# from trophy.models import Trophy
 from django.contrib.auth.models import User
 from comment.models import Comment
 
@@ -9,25 +10,21 @@ import math
 # Create your views here.
 
 def tournament_view(request: HttpRequest):
-    tourments=Tournament.objects.all()
-
-    return render(request, 'tournament/tournaments_home.html',{'touremnts':tourments})
+    tournaments=Tournament.objects.all()
 
 
-def tournament_controll(request :HttpRequest, tourment_id):
-        tournament = Tournament.objects.get(id=tourment_id)
-        tournament_players=TournamentPlayers.objects.filter(tourmnet=tournament)
+    return render(request, 'tournament/tournaments_home.html',{'tournaments':tournaments})
+
+
+def tournament_controll(request :HttpRequest, tournament_id):
+        tournament = Tournament.objects.get(id=tournament_id)
+        tournament_players=TournamentPlayers.objects.filter(tournament_id=tournament_id)
 
         matches = Match.objects.filter(tournament=tournament)
         if  tournament.number_of_players !=0 and not matches:        
             return HttpResponse(tournament_players)
         elif matches and tournament.number_of_players ==0:
             return render(request, 'tournament/tournaments_home.html', {'tournament': tournament, 'matches': matches})
-        
-
-
-
-        match_len = matches.count()
 
         # return HttpResponse(tournament_players[1].player.user.id)
         
@@ -56,70 +53,50 @@ def create_tournament(request : HttpRequest):
         # Get the number of players from the form
         num_players = request.POST['number_of_players'] 
         name= request.POST['name']
-        game= request.POST['game']
-        trpoy_for_tourment= request.POST['trpoy_for_tourment']
+        game= int(request.POST['game'])
+        trophy_for_tournament= int(request.POST['trophy_for_tournament'])
         profile=Profile.objects.get(user=request.user)
 
         if profile.states =='1':
             return HttpResponse("Youre not Allowed to create a tour")
         # Create a new tournament
-        tournament = Tournament.objects.create(name=name , number_of_players=num_players,owner=profile,game=game,trpoy_for_tourment=trpoy_for_tourment)
-
+        tournament = Tournament.objects.create(name=name , number_of_players=num_players,owner=profile,game=game,trophy_for_tournament=trophy_for_tournament, winner=None)
+        return redirect('tournament:tournament_view')
     return render(request, 'tournament/create_tournament.html',{'Tournament':Tournament})
 
 def select_winner(request, match_id):
 
     match = Match.objects.get(id=match_id)
 
-    
-
     if request.method == 'POST':
         winner_id = int(request.POST['winner'])
-        winner_user=User.objects.get(id=winner_id)
+        winner_user = User.objects.get(id=winner_id)
 
         winner = Profile.objects.get(user=winner_user)
 
-        # Update the match with the winner
         match.winner = winner
         match.save()
-        # Check if all matches in the round have winners
+
         tournament = match.tournament
         round_matches = Match.objects.filter(tournament=tournament, winner=None)
         
+        if match.in_round==1 and not tournament.winner:
+            tournament.winner = winner
+            trophy = Trophy(tournament=tournament, winner=winner, points=tournament.trophy_for_tournament)
 
+            winner.points += int(trophy.points)
+            trophy.save()
+            winner.save()
+            return redirect('main:home_view')
         if not round_matches:
             generate_next_round(tournament, match.in_round)
-            # Generate the next round if all matches have winners
-            # if is_final_round(tournament):
-                # return redirect('tournament:show_tournament', tournament_id=match.tournament.id)
-                # matchs = Match.objects.all()
-                # for match in matchs:
-                #     match.winner = None
-                #     match.save()
+            
 
-        if match.in_round==1 and tournament.is_completed==False:
-            tournament.is_completed=True
-            # winner.add_score 
-            tournament.save()
+            
 
             
     return redirect('tournament:show_tournament', tournament_id=match.tournament.id)
 
-def is_final_round(tournament):
-    # Calculate the number of rounds based on the number of players
-    num_players = Match.objects.filter(tournament=tournament).count()
-    num_rounds = 0
-    while num_players > 1:
-        num_players = num_players // 2
-        num_rounds += 1
-
-    # Calculate the number of rounds that have already been played
-    rounds_played = Match.objects.filter(tournament=tournament, winner__isnull=False).count() // 2
-
-    # Check if the current round is the final round
-    return rounds_played == num_rounds
-
-from django.db.models import F
 
 def generate_next_round(tournament, in_round):
     # Retrieve the winners of the current round
@@ -144,8 +121,8 @@ def generate_next_round(tournament, in_round):
     return new_matches
 
 
-def show_tournament_details(request:HttpRequest, tourment_id):
-    tournament = Tournament.objects.get(id=tourment_id)
+def show_tournament_details(request:HttpRequest, tournament_id):
+    tournament = Tournament.objects.get(id=tournament_id)
     matches = Match.objects.filter(tournament=tournament)
     comment = Comment.objects.filter(tournament=tournament)
     profile_user = Profile.objects.get(user=request.user)
@@ -165,28 +142,24 @@ def show_tournament(request, tournament_id):
 
 
 
-def enroll_view(request : HttpRequest,tourment_id):
-    tourment=Tournament.objects.get(id=tourment_id)
-    if tourment.number_of_players==0:
+def enroll_view(request : HttpRequest,tournament_id):
+    tournament=Tournament.objects.get(id=tournament_id)
+    if tournament.number_of_players==0:
         return HttpResponse('Full')
     user_profile=Profile.objects.get(user=request.user)
     
     if user_profile.states=='2' :
         return HttpResponse("Not alloed to enroll")
     else :
-        if TournamentPlayers.objects.filter(tourmnet=tourment,player=user_profile).exists():
+        if TournamentPlayers.objects.filter(tournament=tournament,player=user_profile).exists():
 
             return HttpResponse("PLayers is enrolled ")
         else:
-            user_inrolled_in=TournamentPlayers(tourmnet=tourment, player=user_profile) 
-            tourment.number_of_players-=1
-            tourment.save()
-            user_inrolled_in.save()
-            return HttpResponse("player enrolled ",tourment.number_of_players)
-        
-
-def announce_winner(request: HttpRequest, tournament_id):
-    tournament = Tournament.objects.get(id=tournament_id)
+            user_enrolled_in=TournamentPlayers(tournament=tournament, player=user_profile) 
+            tournament.number_of_players-=1
+            tournament.save()
+            user_enrolled_in.save()
+            return redirect('tournament:tournament_view')
 
 
 

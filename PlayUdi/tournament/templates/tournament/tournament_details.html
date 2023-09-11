@@ -2,10 +2,8 @@
 
 {% block title %}Tournament Details{% endblock %}
 {% block content %}
-
 {% if matches %}
     <ol>
-
         {% for match in matches %}
         <p>{{match.in_round}}</p>
             <li>
@@ -26,6 +24,9 @@
             </li>
             <hr>
             {% endfor %}
+            {% if tournament.is_completed %}
+                <h2 class="row justify-content-around">completed</h2>
+            {% endif %}
         </ol>
         <hr>
 

@@ -8,8 +8,8 @@ urlpatterns = [
     path('createTournament', views.create_tournament, name="create_tournament"),
     path('<int:tournament_id>/', views.show_tournament, name='show_tournament'),
     path('<int:match_id>/select_winner/', views.select_winner, name='select_winner'),
-    path('enroll/<tourment_id>/', views.enroll_view, name='enroll_view'),
-    path('tournament_controll/<tourment_id>/', views.tournament_controll, name='tournament_controll'),
-    path('tournament_details/<tourment_id>/', views.show_tournament_details, name='show_tournament_details'),
+    path('enroll/<tournament_id>/', views.enroll_view, name='enroll_view'),
+    path('tournament_controll/<tournament_id>/', views.tournament_controll, name='tournament_controll'),
+    path('tournament_details/<tournament_id>/', views.show_tournament_details, name='show_tournament_details'),
 
 ]
