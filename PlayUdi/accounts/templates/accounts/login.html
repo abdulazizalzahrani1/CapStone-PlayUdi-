@@ -4,19 +4,24 @@
 
 {% block content %}
     <section calss="logg">
-    <div class="row">
-        <div class="col">
-            <h2>Login</h2>
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8 pb-4" data-aos="fade-up">
+
+            <h2 style="color: #FEC53A;">Login</h2>
             {% if msg %} 
                 <h5 class="text-white bg-danger p-3">{{msg}}</h5>
             {% endif %}
+            <div class="row justify-content-center text-center" data-aos="fade-up" data-aos-delay="300">
             <form action="{% url 'accounts:login_user_view' %}" method="post" >
                 {% csrf_token %}
                 <input type="text" name="username" class="form-control mt-2" placeholder="User Name" />
                 <input type="password" name="password" class="form-control mt-2" placeholder="Password" />
                 <input type="submit" value="Login" class="btn btn-primary mt-4" />
             </form>
+        </div>
 
+        </div>
         </div>
     </div>
 </section>
