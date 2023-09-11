@@ -15,7 +15,7 @@ def register_user_view(request : HttpRequest):
             new_user = User.objects.create_user(first_name=request.POST["first_name"], last_name=request.POST["last_name"], username=request.POST["username"], email=request.POST["email"], password=request.POST["password"])
             new_user.save()
     
-            user_porifle = Profile(user=new_user,birth_date=request.POST["birth_date"], states=request.POST["states"])
+            user_porifle = Profile(user=new_user,birth_date=request.POST["birth_date"], states=request.POST["states"],bio=request.POST['bio'])
             if "avatar" in request.FILES:
                     user_porifle.avatar = request.FILES["avatar"]
             user_porifle.save()

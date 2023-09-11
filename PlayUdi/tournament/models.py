@@ -10,6 +10,7 @@ class Profile(models.Model):
     user_choices = (("1", "user"), ("2", "company"))
     user_rank = ((100, "pro"), (500, "master"))
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio=models.TextField(default="Player")
     birth_date = models.DateField(default="2000-10-10")
     avatar = models.ImageField(upload_to="images/", default="images/default.png")
     states = models.CharField(max_length=160,choices=user_choices, default="1")
