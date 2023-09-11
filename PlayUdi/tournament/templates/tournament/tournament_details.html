@@ -2,7 +2,11 @@
 
 {% block title %}Tournament Details{% endblock %}
 {% block content %}
-{% if matches %}
+
+
+<div class="row">
+    <div class="col-9">
+        {% if matches %}
     <ol>
         {% for match in matches %}
         <p>{{match.in_round}}</p>
@@ -37,8 +41,8 @@
     {%endif%}
 {% endif %}
 
-<div>
-    <nav class="sidebarss">
+    </div>
+    <div class="hei col-3">
         <div class="headerss">
             <h2>Codehal</h2>
         </header>
@@ -50,27 +54,30 @@
                 <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
             </form>
         </div>
-        <div class="scrollbox">
-            <div class="scrollbox-inner">
-                <p>
-                    <div class="row d-flex" style="flex-direction: column-reverse;">
-                        {% for comment in comments %}
-                        <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
-                            <div class="d-flex flex-row gap-3">
-                                <img src="{{comment.profile.avatar.url}}" width="40px" height="35px" style="border-radius: 50%;">
-                                <h4>@{{comment.profile.user.username}}</h4>
+        <nav class="sidebarss">
+            <div class="scrollbox">
+                <div class="scrollbox-inner">
+                    <p>
+                        <div class="row d-flex" style="flex-direction: column-reverse;">
+                            {% for comment in comments %}
+                            <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+                                <div class="d-flex flex-row gap-3">
+                                    <img src="{{comment.profile.avatar.url}}" width="40px" height="35px" style="border-radius: 50%;">
+                                    <h4>@{{comment.profile.user.username}}</h4>
+                                </div>
+                                <p class="mt-2">{{comment.content}}</p>
                             </div>
-                            <p class="mt-2">{{comment.content}}</p>
-                    
+                            {% endfor%}
                         </div>
-                        {% endfor%}
-                    </div>
-                </p>
-    
-            </div>
-        </div>
+                    </p>
         
-    </nav>
+                </div>
+            </div>
+            
+        </nav>
+
+    </div>
+    
 </div>
 
 
