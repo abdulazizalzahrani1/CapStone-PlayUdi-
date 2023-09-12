@@ -4,25 +4,59 @@
 {% block content %}
 
 
-<div class="row">
-    <div class="col-9">
+<div class="row m-4">
+    <div class="col-9 ">
+        <div class="row">
+            <div class="col-3">
+            {% if tournament.game == 1 %}<img src="/static/images/games/chess.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 2 %}<img src="/static/images/games/takken.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 3 %}<img src="/static/images/games/xo.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 4 %}<img src="/static/images/games/cod.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 5 %}<img src="/static/images/games/fifa.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{%endif%}
+            </div>
+            <div class="col-5">
+                <h3 style="color: #FEC53A;">{{ tournament.name }}</h3>
+                <p style="color: beige;">{{tournament.description}}</p>
+                <p style="color: beige;">there are {{tournament.number_of_players}} player/s left.</p>
+            </div>
+            <div class="col-3">
+                <div class="row d-flex flex-column">
+                    {% if trophy %}
+                        <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-primary disabled mt-2">{{trophy.winner.user.username}} is the winner </a>
+                    {% else %}
+                        {% if profile_user.states == '1' %}
+                            {% if player_exist %}
+                                <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-primary disabled mt-2">you are already enrolled</a>
+                            {% else %}
+                                {% if tournament.number_of_players != 0 %}
+                                <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn btn-primary mt-2">Enroll</a>
+                                {% else %} 
+                                <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn btn-primary disabled-2">Full</a>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                                <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to enroll</a>
+                        {% endif %}
+                    {% endif %}
+                
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
         {% if matches %}
-    <ol style="color: #FEC53A;">
-        {% for match in matches %}
-        <p style="color: #FEC53A;font-weight: bold;">{{match.in_round}}</p>
-            <li>
-                <div class="ccontainer grid">
-                    <div class="round">
-                      <div class="round">
-                        <div class="matchh" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player1.avatar.url}});"><div style="background-color: black; opacity: 75%;">{{ match.player1.user.username }}</div></div>
-                        <div class="link"></div>
-                        <div class="matchh" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player2.avatar.url}});"><div style="background-color: black; opacity: 75%;">{{ match.player2.user.username }}</div></div>
-                      </div>
-                   
-                    </div>
+            <ul style="color: #FEC53A;display: flex;flex-direction: column-reverse;">
+                {% for match in matches %}
+                <li>
+                    <p style="color: #FEC53A;font-weight: bold;">Round {{ match.in_round }}</p>
+                    <div class="container grid">
+                        <div class="round">
+                            <div class="round">
+                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player1.avatar.url}});"><div class="m-3" style="background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player1.user.username }}</div></div>
+                                <div class="link"></div>
+                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player2.avatar.url}});"><div class="m-3" style="background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player2.user.username }}</div></div>
+                            </div>
+                        </div>
+
 
                 {% if not match.winner %}
-                    {% if match.tournament.owner.user == request.user%}
+                    {% if match.tournament.owner.user == request.user %}
                     <form method="post" action="{% url 'tournament:select_winner' match.id %}">
                         {% csrf_token %}
                         <label for="winner">Select Winner:</label>
@@ -32,25 +66,30 @@
                         </select>
                         <button  type="submit">Submit Winner</button>
                     </form>
-                {%endif%}
+                    {%endif%}
                 {% else %}
-                    <div style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: 175px;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success" style="width: fit-content; display: flex;justify-content: center;align-items: center;">{{ match.winner.user.username }}</div></div>
+                    <div class="rounded"style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success m-3" style="width: fit-content; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;">{{ match.winner.user.username }}</div></div>
                 {% endif %}
             </li>
             {% endfor %}
-            {% if tournament.is_completed %}
+            {% if tournament.winner %}
                 <h2  class="row justify-content-around">completed</h2>
             {% endif %}
         </ol>
         <hr>
 
         {% else %} 
-
+        <h1 style="color: #FEC53A;">game didn't start yet</h1>
+            <ul class="list-group w-50">
+                {% for player in tournament.tournamentplayers_set.all %}
+                <li class="list-group-item" style="background: #282828 !important;color: #FEC53A;">{{ player.player.user.first_name }}</li>
+                {% endfor %}
+            </ul>
 
 {% endif %}
-
+</div>
     </div>
-    <div class="hei col-3">
+    <div class="hei col-3 rounded">
         <div class="headerss">
         </header>
         <div class="foosterss">
@@ -70,7 +109,7 @@
                     <div>
                             <div style="border-radius: 20px; background-color:rgb(59, 59, 59);" class="d-flex flex-column gap-1 p-4 mt-3">
                                 <div class="d-flex gap-3">
-                                    <img src="{{comment.profile.avatar.url}}" width="40px" height="35px" style="border-radius: 50%;">
+                                    <img src="{{comment.profile.avatar.url}}" width="40px" height="35px" style="border-radius: 50%;" class="rounded">
                                     <h5 style="color: #FEC53A;" >@{{comment.profile.user.username}}</h5>
                                 </div>
                                 <p class="mt-2">{{comment.content}}</p>

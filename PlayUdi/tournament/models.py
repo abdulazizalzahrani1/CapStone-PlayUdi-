@@ -28,6 +28,7 @@ class Tournament(models.Model):
     user_choices_trophy = ((100, "Bronze"), (200, "Sliver"),(300,'Gold'))
 
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=2048, default="")
     number_of_players = models.IntegerField(choices=user_choices, default=1)
     game = models.IntegerField(choices=user_choices_games, default=1)
     trophy_for_tournament = models.IntegerField(choices=user_choices_trophy, default=100)
