@@ -17,7 +17,7 @@
         {% for profile in profiles %} 
           {%if profile.states == '1' %}
 
-          <li><a class="col-12 dropdown-item" href="">{{profile.user.username}}</a></li>
+          <li><a class="col-12 dropdown-item" href="{% url 'accounts:profile_page' profile.user.id %}">{{profile.user.username}}</a></li>
           {%endif%}
       {% endfor %}
     </ul>
@@ -33,12 +33,26 @@
           {%if profile.states == '2' %}
           <div class="row pt-5">
             
-          <div class="card" style="width: 18rem;">
+          <div class="card cardbg" style="width: 18rem;">
             <img src="{{profile.avatar.url}}" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{profile.user.username}}</h5>
-              <p class="card-text">{{profile.bio}}</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <h5 class="m-2 card-title text-light">{{profile.user.username}}</h5>
+              <p class="m-2 card-text text-light">{{profile.bio}}</p>
+              <form action="{% url 'accounts:user_admin_view' %}"  method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %} 
+                <div class="row">
+                  
+                <input type="hidden" value="{{profile.user.id}}" name="profile_id" >
+              <select class=" m-1 form-select" name="status">                
+                <option value="non_active">non active</option>
+                
+                <option value="active">active</option>
+
+              </select>
+                </div>
+              <input type="submit" value="change status" class="m-1">
+          </form>
+              <a href="{% url 'accounts:profile_page' profile.user.id %}" class="control-form m-1 btn btn-primary">Company details</a>
             </div>
           </div>
         </div>

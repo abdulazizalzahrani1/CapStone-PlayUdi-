@@ -42,6 +42,8 @@ header {
 }
 .cardbg{
     background-color: #27043b;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(219, 56, 28, 0.125);
 }
 .logo{
     width: 300px;
@@ -620,9 +622,12 @@ ul li a:hover {
 }
 .imgProfile {
     max-width: 100%;
+    border-radius: 20px;
+    box-shadow:0 0 30px rgb(197 40 40 / 26%);
 }
 .imgProfile {
     vertical-align: middle;
+    border-radius: 20px;
     border-style: none;
 }
 /* About Me 

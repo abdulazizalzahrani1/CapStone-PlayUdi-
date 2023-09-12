@@ -38,12 +38,16 @@
                                 Account
                               </a>
                               <ul  class="dropdown-menu bg-black">
+                                {% if not request.user.is_staff%}
                                 <li><a class="dropdown-item" href="{% url 'accounts:profile_page' request.user.id %}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'accounts:update_profile_page' request.user.id %}">Update Profile</a></li>
+                                {%endif%}
                                 {% if request.user.is_staff %}
                                 <li><a class="dropdown-item" href="{% url 'trophy:trophy_view' %}">Trophy</a></li>
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                {% if request.user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url 'accounts:user_admin_view' %}">admin page</a></li>
+                                {% endif %}
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'accounts:logout_user_view'%}">Logout</a></li>
                               </ul>

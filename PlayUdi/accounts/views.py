@@ -98,6 +98,19 @@ def user_admin_view(request: HttpRequest):
      users = User.objects.all()
      profiles= Profile.objects.all()
      touremnts=Tournament.objects.all()
+     if request.method=="POST":
+        status= request.POST["status"]
+        profile_id=request.POST["profile_id"]
+
+        profile = User.objects.get(id=profile_id)
+
+        if status == "non_active":
+            profile.is_active= False
+        else:
+              profile.is_active= True
+        profile.save()
+
+
      
      return render(request, "accounts/user_admin.html",context = {"users" :users ,"profiles":profiles,"touremnts":touremnts})  
   
