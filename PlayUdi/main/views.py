@@ -4,15 +4,16 @@ from tournament.models import Tournament
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from tournament.models import Trophy
-from tournament.models import Profile
+from tournament.models import Profile,Tournament
 
 # Create your views here.
 
 
 def home_view(request: HttpRequest):
     trophy=Trophy.objects.all()
-    profile= Profile.objects.all().order_by('-points')[0:4]
-    return render(request, "main/home.html",{"trophies":trophy,"profile":profile})
+    profile= Profile.objects.all().order_by('-points')[0:5]
+    tournament = Tournament.objects.all()[0:2]
+    return render(request, "main/home.html",{"trophies":trophy,"profile":profile, "tournament":tournament})
 
 
 
