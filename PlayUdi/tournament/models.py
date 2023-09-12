@@ -15,7 +15,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to="images/", default="images/default.png")
     states = models.CharField(max_length=160,choices=user_choices, default="1")
     points = models.IntegerField(default=0)
-    user_rank = models.CharField(max_length=160,choices=user_ranks, default="1")
+    user_rank = models.CharField(max_length=160,choices=user_ranks, default="nor")
     # bio = models.TextField(max_length=256)
     # Trophy
 
