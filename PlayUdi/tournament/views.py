@@ -21,10 +21,10 @@ def tournament_controll(request :HttpRequest, tournament_id):
         tournament_players=TournamentPlayers.objects.filter(tournament_id=tournament_id)
 
         matches = Match.objects.filter(tournament=tournament)
-        if  tournament.number_of_players !=0 and not matches:        
-            return HttpResponse(tournament_players)
-        elif matches and tournament.number_of_players ==0:
-            return redirect( 'tournament:show_tournament_details',tournament_id)
+        # if  tournament.number_of_players !=0 and not matches:        
+        #     return HttpResponse(tournament_players)
+        # elif matches and tournament.number_of_players ==0:
+        #     return redirect( 'tournament:show_tournament_details',tournament_id)
 
         return redirect( 'tournament:show_tournament_details',tournament_id)
 
