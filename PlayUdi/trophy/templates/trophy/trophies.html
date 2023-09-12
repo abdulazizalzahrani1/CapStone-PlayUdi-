@@ -3,18 +3,27 @@
 {% block title %} Trophy {% endblock%}
 
 {% block content %}
-<h1>Trophies</h1>
+<h1 style="display: flex; justify-content: center; margin-top: 10px;">Trophies</h1>
 
-  <div class="row ds">
-    {% for trophy in trophies %}
-      <div class="col-md-3" >
-        <div class="card mb-4" >
-          {%if trophy.tournament.trophy_for_tournament >= 300%}<img src="/static/images/gold.jpg" width="100px" height="300px" class="card-img-top"> {%elif trophy.tournament.trophy_for_tournament >= 200%}<img src="/static/images/silver.jpg" width="100px" height="300px" class="card-img-top"> {%elif trophy.tournament.trophy_for_tournament < 200 %} <img src="/static/images/silverr.jpg" width="100px" height="300px" class="card-img-top">{%endif%}
-          <div class="card-body">
-            <h5 class="card-title"><strong>Tournament name:</strong> {{ trophy.tournament.name }}</h5>
-            <p class="card-text"><strong>Game:</strong> {{ trophy.tournament.get_game_display }}</p>
-            <p class="card-text"><strong>Points:</strong> {{ trophy.points }}</p>
-            <p class="card-text"><strong>The winner is:</strong> {{ trophy.winner.user.username }}</p>
+<section id="services" class="full-height px-lg-5">
+  <div  class="containerrr">
+    <div  class="row pb-4" data-aos="fade-up">
+    </div>
+    <div class="row gy-4">
+  {% for trophy in trophies %}
+  <div class="col-4 h-100" data-aos="fade-up" data-aos-delay="300" style="margin-top: -20px;">
+    <div class="service p-4 bg-base rounded-4 shadow-effect " style="height: max-content;">     
+          {%if trophy.tournament.trophy_for_tournament >= 300%}
+          <img src="/static/images/gold.jpg" width="100px" height="300px" class="card-img-top"> 
+          {%elif trophy.tournament.trophy_for_tournament >= 200%}
+          <img src="/static/images/silver.jpg" width="100px" height="300px" class="card-img-top">
+           {%elif trophy.tournament.trophy_for_tournament < 200 %}
+            <img src="/static/images/silverr.jpg" width="100px" height="300px" class="card-img-top">
+            {%endif%}
+            <h5 style="word-wrap: break-word; color: #fec53a;" class="mt-4 mb-2"><strong>Tournament name:</strong> {{ trophy.tournament.name }}</h5>
+            <p style="word-wrap: break-word; color: aliceblue;" class="mt-4 mb-2"><strong>Game:</strong> {{ trophy.tournament.get_game_display }}</p>
+            <p style="word-wrap: break-word;color: aliceblue; " class="mt-4 mb-2"><strong>Points:</strong> {{ trophy.points }}</p>
+            <p style="word-wrap: break-word; color: aliceblue;" class="mt-4 mb-2"><strong>The winner is:</strong> {{ trophy.winner.user.username }}</p>
 
 
           </div>

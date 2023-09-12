@@ -19,7 +19,7 @@
             <div class="col-3">
                 <div class="row d-flex flex-column">
                     {% if trophy %}
-                        <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-primary disabled mt-2">{{trophy.winner.user.username}} is the winner </a>
+                        <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-success disabled mt-2">{{trophy.winner.user.username}} is the winner </a>
                     {% else %}
                         {% if profile_user.states == '1' %}
                             {% if player_exist %}
@@ -60,16 +60,18 @@
                     {% if match.tournament.owner.user == request.user %}
                     <form method="post" action="{% url 'tournament:select_winner' match.id %}">
                         {% csrf_token %}
-                        <label for="winner">Select Winner:</label>
-                        <select name="winner">
-                            <option style="background:#FEC53A;" value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
+                        <label style="margin-left: 85px;" for="winner">Select Winner:</label>
+                        <select style="margin-left: 91px;" name="winner">
+                            <option value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
                             <option value="{{ match.player2.user.id }}">{{ match.player2.user.username }}</option>
                         </select>
-                        <button  type="submit">Submit Winner</button>
+                        <button style="margin-left: 80px;"  type="submit">Submit Winner</button>
                     </form>
                     {%endif%}
                 {% else %}
-                    <div class="rounded"style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success m-3" style="width: fit-content; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;">{{ match.winner.user.username }}</div></div>
+                <div style="margin-left:50px">
+                    <div class="rounded"style=" width: 150%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success " style="width: 100%; position: relative; top: -155px; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;"> THE WINNER IS {{ match.winner.user.username }}</div></div>
+                </div>
                 {% endif %}
             </li>
             {% endfor %}
