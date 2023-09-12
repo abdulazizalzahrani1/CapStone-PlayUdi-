@@ -349,17 +349,16 @@ ul.navbar li a:hover:not(.active){
     flex-direction: column;
     text-align: center;
 }
-.p-image{
+.p-image-1{
+    background: url("{{trophy.winner.avatar.url}}");
     width: 200px;
     height: 200px;
-    background: url(../images/vaklish.png);
     background-size: cover;
     background-position: center;
     border-radius: 50%;
     position: relative;
 }
 .p-image-1::after{
-    content: 'VS';
     position: absolute;
     right: -35px;
     bottom: 0;
@@ -558,6 +557,9 @@ ul li a:hover{
     padding: 15px 0 40px;
 }
 
+.players:hover{
+    scale: 0.9;
+}
 /* ================================= */
 
   
