@@ -620,7 +620,8 @@ ul li a:hover {
     background-color: #f5f5f5;
 }
 .imgProfile {
-    max-width: 100%;
+    width: 70cqh;
+    height: 85cqh;
     border-radius: 20px;
     box-shadow:0 0 30px rgb(197 40 40 / 26%);
 }
@@ -699,7 +700,13 @@ ul li a:hover {
     margin-top: 30px;
   }
 }
+.counter{
+  align-items: center;
 
+
+  
+  
+}
 .about-section .counter {
   padding: 22px 20px;
   background: #ffffff;

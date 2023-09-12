@@ -17,14 +17,7 @@
     <h3 class="dark-color">About Me</h3>
     <h6 class="theme-color lead">{{profile.user.username}} </h6>
     <p>{{profile.bio}} </p>
-    <div class="row about-list">
-    <div class="col-md-6">
-    <div class="media">
-    <label>Birthday</label>
-    <p>{{profile.birth_date}}</p>
-    </div>
-    
-    </div>
+  
     </div>
     <div class="row about-list">
     <div class="col-md-6">
@@ -35,36 +28,48 @@
 </div>
     
     
+{% if profile.states == '1' %}
+    </div>
+    <div class="row about-list">
+      <div class="col-md-6">
+      <div class="media">
+      <label>Birthday</label>
+      <p>{{profile.birth_date}}</p>
+      </div>
+      
+      </div>
+    </div>
+    </div>
+    </div>
    
     </div>
-    </div>
-    </div>
-    </div>
-   
-    </div>
-    <div class="counter">
-    <div class="row">
-    <div class="col-6 col-lg-3">
-    <div class="count-data text-center">
+    
+    <div class="ps-5 counter ">
+      <div class="ps-5 ">
+        <div class="ps-5">
+          <div class="ps-5">
+    <div class="ps-5 row ">
+    <div class="ps-5 col-lg-3">
+    <div class="ps-5 text-center">
       <p class="m-0px font-w-600">Points</p>
     <h6 class="count h2" data-to="500" data-speed="500">{{profile.points}}</h6>
    
     </div>
     </div>
-    <div class="col-6 col-lg-3">
-    <div class="count-data text-center">
+    <div class="ps-5 col-lg-3">
+    <div class="ps-5 text-center">
       <p class="m-0px font-w-600">Rank</p>
     <h6 class="count h2" data-to="150" data-speed="150 {{ profile.user_rank }}">{{profile.get_user_rank_display}}</h6>
-    
+  </div>
     </div>
     </div>
-   
- 
+    </div>
+    </div>
     </div>
     </div>
     <div class="profileDetails py-3 container">
  
-        {% if profile.states == '1' %}
+        
         <div class="row ds">
            {% for trophy in trophies %}
              <div class="col-6 col-lg-12 col-md-6" >
