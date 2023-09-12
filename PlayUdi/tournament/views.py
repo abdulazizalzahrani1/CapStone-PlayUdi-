@@ -76,7 +76,6 @@ def select_winner(request:HttpRequest, match_id):
 
             trophy.save()
             winner.save()
-            return redirect('tournament:tournament_view')
         if not round_matches:
             generate_next_round(tournament, match.in_round)
             
