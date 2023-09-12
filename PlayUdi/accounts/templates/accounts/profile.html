@@ -54,7 +54,7 @@
     <div class="col-6 col-lg-3">
     <div class="count-data text-center">
       <p class="m-0px font-w-600">Rank</p>
-    <h6 class="count h2" data-to="150" data-speed="150">{{profile.user_rank}}</h6>
+    <h6 class="count h2" data-to="150" data-speed="150 {{ profile.user_rank }}">{{profile.get_user_rank_display}}</h6>
     
     </div>
     </div>
@@ -62,20 +62,30 @@
  
     </div>
     </div>
-</div>
-<div class="profileDetails py-3 container">
+    <div class="profileDetails py-3 container">
  
-     {% if profile.states == '1' %}
-     {% for trophy in trophies %}
-         <div class="cardbg card profileBody">
-         {{ trophy.tournament.name }}        
-         </div>
-     {% endfor %}
-     {% else %}
-
-     {% endif %}
- </div>
+        {% if profile.states == '1' %}
+        <div class="row ds">
+           {% for trophy in trophies %}
+             <div class="col-6 col-lg-12 col-md-6" >
+               <div class="card mb-5" >
+                 {%if trophy.tournament.trophy_for_tournament >= 300%}<img src="/static/images/gold.jpg" width="100px" height="300px" class="card-img-top"> {%elif trophy.tournament.trophy_for_tournament >= 200%}<img src="/static/images/silver.jpg" width="100px" height="300px" class="card-img-top"> {%elif trophy.tournament.trophy_for_tournament < 200 %} <img src="/static/images/silverr.jpg" width="100px" height="300px" class="card-img-top">{%endif%}
+                 <div class="card-body">
+                   <h5 class="card-title"><strong>Tournament name:</strong> {{ trophy.tournament.name }}</h5>
+                   <p class="card-text"><strong>Game:</strong> {{ trophy.tournament.get_game_display }}</p>
+                   <p class="card-text"><strong>Points:</strong> {{ trophy.points }}</p>
+                   <p class="card-text"><strong>The winner is:</strong> {{ trophy.winner.user.username }}</p>       
+            </div>
+        {% endfor %}
+   
+        {% endif %}
     </div>
+       </div>
+        </div>
+   </div>
+</div>
+
+    
     </section>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
