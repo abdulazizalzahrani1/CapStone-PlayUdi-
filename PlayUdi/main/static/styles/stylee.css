@@ -5,6 +5,7 @@
   box-sizing: border-box;
 }
 
+
 .profileDetails {
   display: flex;
   flex-direction: row;
@@ -503,23 +504,30 @@ ul li a:hover {
   font-weight: bold;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
+
+
+.scrollbox::-webkit-scrollbar{
+    width: 5px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #fff;
-  border-radius: 10px;
+
+.hei{
+    background: linear-gradient(-45deg,#571845 , #c70039);
+    margin-top: 20px;
+    width: 25%;
+    height: max-content;
+
+
+
 }
-.hei {
-  background: linear-gradient(-45deg, #571845, #c70039);
-}
-.sidebarss {
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-  padding: 20px 5px 0 20px;
-  max-height: 500px;
+.sidebarss{
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    padding: 20px 5px 0 20px;
+    max-height: 500px;
+
+    
 }
 
 .headerss h2 {
@@ -544,3 +552,52 @@ ul li a:hover {
   color: #fff;
   padding: 15px 0 40px;
 }
+
+/* ================================= */
+
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 205px);
+    align-items: center;
+  }
+  
+  
+  .round {
+    position: relative;
+    max-width: 185px;
+  }
+  
+  .matchh {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    height: 80px;
+    width: 180px;
+    margin: 10px auto;
+    border: 1px solid black;
+  }
+  
+  
+  .link {
+    position: absolute;
+    top: 25%;
+    bottom: 25%;
+    left: 100%;
+    right: -10px;
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+    border-right: 1px solid red;
+  }
+  
+  .link:after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 5px);
+    left: 10px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid red;
+  }
