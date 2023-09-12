@@ -569,6 +569,7 @@ ul li a:hover {
     background: linear-gradient(-45deg,#571845 , #c70039);
     margin-top: 20px;
     width: 25%;
+    height: max-content;
 
 
 
@@ -771,7 +772,7 @@ ul li a:hover {
     top: 25%;
     bottom: 25%;
     left: 100%;
-    right: -10px;
+    right: -40px;
     border-top: 1px solid red;
     border-bottom: 1px solid red;
     border-right: 1px solid red;
@@ -781,7 +782,7 @@ ul li a:hover {
     content: "";
     position: absolute;
     top: calc(50% - 5px);
-    left: 10px;
+    left: 0px;
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
@@ -883,7 +884,7 @@ a:hover {
 .link-custom {
     font-weight: 700;
     position: relative;
-    margin-left: 14px;
+    margin-left: 1px;
 }
 
 .link-custom::after {
