@@ -32,6 +32,9 @@
                             <li class="nav-item">
                               <a class="nav-link" href="{% url 'tournament:tournament_view'%}">tournament</a>
                             </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'trophy:trophy_view'%}">Trophy</a>
+                            </li>
                             {% if request.user.is_authenticated%}
                             <li class="nav-item dropdown">
                               <a  class="nav-link dropdown-toggle " style="color: #fff;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,7 +63,9 @@
                         </div>
                         
                           </ul>
+                          <a href="{% url 'tournament:tournament_view'%}">
                           <button type="button" id="btn"><i class="fas fa-play"></i>PLAY NOW</button>
+                        </a>
 
             </header>
 
