@@ -22,10 +22,6 @@ class Profile(models.Model):
     def __str__(self) -> str:
         return f"{self.user}"
 
-
-
-
-
 class Tournament(models.Model):
     user_choices = ((4, "4"), (8, "8"),(16,'16'),(32,'32'))
     user_choices_games = ((1, "Chess"), (2, "Takken"),(3,'x&o'),(4,'Call Of Duty'),(5,'FIFA24'))

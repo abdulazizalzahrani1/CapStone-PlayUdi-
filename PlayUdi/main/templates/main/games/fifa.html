@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %} {% block title %} Fifa {% endblock %} 
+{% block content %}
+<div class="row gap-4 m-4">
+<div class="row ">
+    <div class="col-4">
+        <img class="w-100" src="/static/images/games/fifa.png" alt="Fifa image">
+    </div>
+    <div class="col-8 my-4" >
+        <h1 style="color:#fec53a">Fifa Game</h1>
+        <h4 style="color:beige">FIFA, the video game series by EA Sports, has brought the world's most popular sport, soccer (football in most parts of the world), to the gaming world with unmatched realism. With stunning graphics, lifelike player animations, and meticulous attention to detail, FIFA captures the essence of the beautiful game.
+
+FIFA offers various game modes, from career management to fast-paced online matches. Gamers can build their dream teams, trade players, and compete against others worldwide. The franchise's annual releases ensure that it stays current with real-world soccer events, including player transfers and team updates.
+
+FIFA is not just a game; it's a global cultural phenomenon. It unites soccer fans from different nations and allows them to experience the thrill of international competitions like the FIFA World Cup. The competitive FIFA esports scene has also gained prominence, with professional players and lucrative tournaments.</h4>
+    </div>
+</div>
+<div class="row gap-3">
+    <h2 style="color:#fec53a"> Fifa Tournaments </h2>
+    {% if fifa_tournaments %}
+  {% for tournament in fifa_tournaments %}
+  <div class="col-3">
+    <div class="card mb-3" style="background: #282828">
+      <div class="card-body">
+        <h3></h3>
+        <h5 class="card-title" style="color:#fec53a">{{ tournament.name }}</h5>
+        <h6 class="card-subtitle mb-2" style="color:beige">By: {{ tournament.owner.user.username }}</h6>
+        {% if tournamet.winner %}
+        <h6>we have winner : {{ tournamet.winner.user.username }}</h6>
+        {% else %}
+        <a href="{% url 'tournament:show_tournament_details' tournament.id %}" class="btn mt-2" style="color: #fec53a;border: solid 1px#fec53a;">Deatails</a>
+        {% endif %}
+        <a>Players</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+    {% else %}
+  <h4 style="color:beige">There is no tournaments ...</h4>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

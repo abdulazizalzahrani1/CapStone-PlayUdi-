@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %} {% block title %} Chess {% endblock %} 
+{% block content %}
+<div class="row gap-4 m-4">
+<div class="row ">
+    <div class="col-4">
+        <img class="w-100" src="/static/images/games/chess.png" alt="Chess board image">
+    </div>
+    <div class="col-8 my-4" >
+        <h1 style="color:#fec53a">Chess Game</h1>
+        <h4 style="color:beige">Chess is a timeless classic that has captivated minds for centuries. This two-player board game is often hailed as the "game of kings" due to its rich history and strategic depth. Its origins can be traced back over a thousand years, making it one of the oldest games still played today.
+
+The appeal of chess lies in its simplicity and complexity simultaneously. On the surface, it has just 64 squares and 32 pieces, but the intricate rules governing their movements result in an astounding number of possible positions. Chess demands strategic thinking, foresight, and tactical precision. It's a game that teaches critical skills such as problem-solving and decision-making, making it popular in educational circles.
+
+Beyond its educational benefits, chess is also a competitive sport played professionally worldwide. Grandmasters, the highest-ranking chess players, are revered for their extraordinary skills and mastery of the game. Chess tournaments draw in enthusiasts from all walks of life, and the World Chess Championship is one of the most prestigious events in the chess calendar.
+
+</h4>
+    </div>
+</div>
+<div class="row gap-3">
+    <h2 style="color:#fec53a"> Chess Tournaments </h2>
+    {% if chess_tournaments %}
+  {% for tournament in chess_tournaments %}
+  <div class="col-3">
+    <div class="card mb-3" style="background: #282828">
+      <div class="card-body">
+        <h3></h3>
+        <h5 class="card-title" style="color:#fec53a">{{ tournament.name }}</h5>
+        <h6 class="card-subtitle mb-2" style="color:beige">By: {{ tournament.owner.user.username }}</h6>
+        {% if tournamet.winner %}
+        <h6>we have winner : {{ tournamet.winner.user.username }}</h6>
+        {% else %}
+        <a href="{% url 'tournament:show_tournament_details' tournament.id %}" class="btn mt-2" style="color: #fec53a;border: solid 1px#fec53a;">Deatails</a>
+        {% endif %}
+        <a>Players</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+    {% else %}
+  <h4 style="color:beige">There is no tournaments ...</h4>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

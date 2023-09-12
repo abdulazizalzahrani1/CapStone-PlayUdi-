@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %} {% block title %} XO {% endblock %} 
+{% block content %}
+<div class="row gap-4 m-4">
+<div class="row ">
+    <div class="col-4">
+        <img class="w-100" src="/static/images/games/xo.png" alt="XO board image">
+    </div>
+    <div class="col-8 my-4" >
+        <h1 style="color:#fec53a">XO Game</h1>
+        <h4 style="color:beige">Switching gears from high-intensity warfare to simplicity, X-O, also known as Tic-Tac-Toe, is a classic game that most people encounter in their childhood. This deceptively simple game is played on a 3x3 grid, where two players take turns marking the grid with their symbols, usually 'X' and 'O,' with the objective of forming a line of three of their symbols horizontally, vertically, or diagonally.
+
+Despite its straightforward rules, X-O offers fundamental lessons in strategy and tactics. Players quickly learn to anticipate their opponent's moves and plan ahead to secure a winning position. While it's often associated with childhood, X-O remains an enjoyable pastime for people of all ages and can be a fun way to pass the time.
+
+</h4>
+    </div>
+</div>
+<div class="row gap-3">
+    <h2 style="color:#fec53a"> XO Tournaments </h2>
+    {% if XO_tournaments %}
+  {% for tournament in XO_tournaments %}
+  <div class="col-3">
+    <div class="card mb-3" style="background: #282828">
+      <div class="card-body">
+        <h3></h3>
+        <h5 class="card-title" style="color:#fec53a">{{ tournament.name }}</h5>
+        <h6 class="card-subtitle mb-2" style="color:beige">By: {{ tournament.owner.user.username }}</h6>
+        {% if tournamet.winner %}
+        <h6>we have winner : {{ tournamet.winner.user.username }}</h6>
+        {% else %}
+        <a href="{% url 'tournament:show_tournament_details' tournament.id %}" class="btn mt-2" style="color: #fec53a;border: solid 1px#fec53a;">Deatails</a>
+        {% endif %}
+        <a>Players</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+    {% else %}
+  <h4 style="color:beige">There is no tournaments ...</h4>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

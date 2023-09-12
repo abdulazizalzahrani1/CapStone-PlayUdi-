@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% block title %} Call Of Duty {% endblock %}
+{% block content %}
+<div class="row gap-4 m-4">
+<div class="row ">
+    <div class="col-4">
+        <img class="w-100" src="/static/images/games/cod.png" alt="Fifa image">
+    </div>
+    <div class="col-8 my-4" >
+        <h1 style="color:#fec53a">Call of Duty Vediw Game</h1>
+        <h4 style="color:beige">In stark contrast to the cerebral nature of chess, Call of Duty (COD) is an adrenaline-pumping first-person shooter (FPS) series that has taken the gaming world by storm. Since its inception in 2003, COD has become a cultural phenomenon, known for its intense action, cinematic campaigns, and competitive multiplayer modes.
+
+Set against various historical and contemporary backdrops, COD games immerse players in epic battles, offering a taste of warfare on a grand scale. The franchise has evolved over the years, incorporating cutting-edge graphics, realistic physics, and innovative gameplay mechanics. It's not just a game; it's a blockbuster experience.
+
+One of the key strengths of COD is its robust online multiplayer community. Players from around the globe engage in fast-paced, team-based combat, creating a dynamic and ever-changing gaming environment. Esports competitions like the Call of Duty League have emerged, elevating the game to a professional sport with lucrative prizes.</h4>
+    </div>
+</div>
+<div class="row gap-3">
+    <h2 style="color:#fec53a"> Call of Duty  Tournaments </h2>
+    {% if cod_tournaments %}
+  {% for tournament in cod_tournaments %}
+  <div class="col-3">
+    <div class="card mb-3" style="background: #282828">
+      <div class="card-body">
+        <h3></h3>
+        <h5 class="card-title" style="color:#fec53a">{{ tournament.name }}</h5>
+        <h6 class="card-subtitle mb-2" style="color:beige">By: {{ tournament.owner.user.username }}</h6>
+        {% if tournamet.winner %}
+        <h6>we have winner : {{ tournamet.winner.user.username }}</h6>
+        {% else %}
+        <a href="{% url 'tournament:show_tournament_details' tournament.id %}" class="btn mt-2" style="color: #fec53a;border: solid 1px#fec53a;">Deatails</a>
+        {% endif %}
+        <a>Players</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+    {% else %}
+  <h4 style="color:beige">There is no tournaments ...</h4>
+  {% endif %}
+</div>
+</div>{% endblock %}
+
