@@ -114,18 +114,18 @@ def show_tournament_details(request:HttpRequest, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)
     tournament_player = TournamentPlayers.objects.filter(tournament=tournament)
     matches = Match.objects.filter(tournament=tournament)
-    comment = Comment.objects.filter(tournament=tournament)
-    try:
-        profile_user = Profile.objects.get(user=request.user)
-    except:
-        profile_user = None
+    comments = Comment.objects.filter(tournament=tournament)
+    profile_user = Profile.objects.filter(user=request.user).first()
+    trophy = Trophy.objects.filter(tournament=tournament).first()
+
     if request.method == "POST" and request.user.is_authenticated:
         new_comment = Comment(tournament=tournament, profile=profile_user, content=request.POST["content"])
         new_comment.save()
     match_len = matches.count()
     player_exist = TournamentPlayers.objects.filter(tournament=tournament,player=profile_user).exists()
-    trophy = Trophy.objects.get(tournament=tournament)
-    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comment,"tournament_player":tournament_player, "profile_user":profile_user, "player_exist":player_exist, "trophy":trophy})
+
+    
+    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comments,"tournament_player":tournament_player, "profile_user":profile_user, "player_exist":player_exist, "trophy":trophy})
 
 
 
