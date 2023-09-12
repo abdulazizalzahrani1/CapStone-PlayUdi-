@@ -22,7 +22,7 @@
                     {% else %}
                         {% if profile_user.states == '1' %}
                             {% if player_exist %}
-                                <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-primary disabled mt-2">you are already enrolled</a>
+                                <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-primary disabled mt-2">You are already enrolled</a>
                             {% else %}
                                 {% if tournament.number_of_players != 0 %}
                                 <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn btn-primary mt-2">Enroll</a>

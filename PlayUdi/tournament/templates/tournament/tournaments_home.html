@@ -51,8 +51,11 @@
                         {%endif%}
                             
                             <div style="padding: 10px;" >
-                           
-                                <a href="{% url 'tournament:tournament_controll' tournament.id %}" class="btn btn-warning">Play Now!</a>
+                                {% if request.user.is_authenticated %}
+                                    <a href="{% url 'tournament:tournament_controll' tournament.id %}" class="btn btn-warning">Play Now!</a>
+                                {% else %}
+                                    <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to see the tournament details</a>
+                                {% endif %}
                                 
                 </div>
     
