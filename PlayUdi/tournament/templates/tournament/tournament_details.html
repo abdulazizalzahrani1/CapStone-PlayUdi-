@@ -98,7 +98,11 @@
             <form action="{% url 'tournament:show_tournament_details' tournament.id %}" method="post" >
                 {% csrf_token %}
                 <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+                {% if profile_user.states == '1' %}
                 <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+                {% else %}
+                <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to add comments</a>
+                {% endif %}
             </form>
         </div>
         <nav class="sidebarss">
