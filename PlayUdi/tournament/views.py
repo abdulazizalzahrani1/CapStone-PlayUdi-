@@ -110,6 +110,7 @@ def generate_next_round(tournament, in_round):
 
 def show_tournament_details(request:HttpRequest, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)
+    tournament_player = TournamentPlayers.objects.filter(tournament=tournament)
     matches = Match.objects.filter(tournament=tournament)
     comment = Comment.objects.filter(tournament=tournament)
     profile_user = Profile.objects.get(user=request.user)
@@ -118,7 +119,7 @@ def show_tournament_details(request:HttpRequest, tournament_id):
         new_comment = Comment(tournament=tournament, profile=profile_user, content=request.POST["content"])
         new_comment.save()
     match_len = matches.count()
-    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comment})
+    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comment,"tournament_player":tournament_player})
 
 
 

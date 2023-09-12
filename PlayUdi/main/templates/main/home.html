@@ -40,15 +40,25 @@
     </div>
 </div>
 
+
+
 </section>
 
 <!-- New section is down here below -->
 
-<section class="section-2">
-<h1>The Grande Match</h1>
+<section class="section-2" style="padding-top: 25px;">
+<h1>Top Players</h1>
+{%for pro in profile%}
 <div class="players">
-    <div class="p-image p-image-1"></div>
-    <span>Abdullah</span>
+    <a href="{% url 'accounts:profile_page' pro.user.id %}">
+    <img src="{{pro.avatar.url}}" style="width: 160px;
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    position: relative;"></a>
+    <span>{{pro.user.username}}<br>
+    <p>{{pro.points}}</p></span>
     <div class="stars">
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
@@ -57,42 +67,8 @@
         <i class="fas fa-star-half-alt"></i>
     </div>
 </div>
-<!-- Player 2 -->
-<div class="players">
-    <div class="p-image p-image-2"></div>
-    <span>Naif</span>
-    <div class="stars">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half-alt"></i>
-    </div>
-</div>
-     <!-- Player 3 -->
-<div class="players">
-    <div class="p-image p-image-3"></div>
-    <span>Fahad</span>
-    <div class="stars">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half-alt"></i>
-    </div>
-</div>
-     <!-- Player 4 -->
-<div class="players">
-    <div class="p-image p-image-4"></div>
-    <span>Mohammed</span>
-    <div class="stars">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half-alt"></i>
-    </div>
-</div>
+{%endfor%}
+
 </section>
 <div class="logoo-section">
     <i class="fas fa-gamepad"></i>

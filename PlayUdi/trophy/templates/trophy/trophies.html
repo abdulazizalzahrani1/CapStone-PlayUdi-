@@ -5,20 +5,24 @@
 {% block content %}
 <h1>Trophies</h1>
 
-  <div class="row">
+  <div class="row ds">
     {% for trophy in trophies %}
-      <div class="col-md-4">
-        <div class="card mb-4">
-          <img src="{{ trophy.image.url }}" class="card-img-top" alt="{{ trophy.name }}">
+      <div class="col-md-3" >
+        <div class="card mb-4" >
+          {%if trophy.tournament.trophy_for_tournament >= 300%}<img src="/static/images/gold.jpg" width="100px" height="300px" class="card-img-top"> {%elif trophy.tournament.trophy_for_tournament >= 200%}<img src="/static/images/silver.jpg" width="100px" height="300px" class="card-img-top"> {%elif trophy.tournament.trophy_for_tournament < 200 %} <img src="/static/images/silverr.jpg" width="100px" height="300px" class="card-img-top">{%endif%}
           <div class="card-body">
-            <h5 class="card-title">{{ trophy.name }}</h5>
-            <p class="card-text">{{ trophy.description }}</p>
+            <h5 class="card-title"><strong>Tournament name:</strong> {{ trophy.tournament.name }}</h5>
+            <p class="card-text"><strong>Game:</strong> {{ trophy.tournament.get_game_display }}</p>
             <p class="card-text"><strong>Points:</strong> {{ trophy.points }}</p>
+            <p class="card-text"><strong>The winner is:</strong> {{ trophy.winner.user.username }}</p>
+
+
           </div>
         </div>
       </div>
     {% endfor %}
   </div>
+
 
 <a href="{% url 'trophy:add_trophy_view' %}"> add trophy </a>
 {% endblock%}
