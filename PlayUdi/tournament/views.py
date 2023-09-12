@@ -11,8 +11,6 @@ import math
 
 def tournament_view(request: HttpRequest):
     tournaments=Tournament.objects.all()
-
-
     return render(request, 'tournament/tournaments_home.html',{'tournaments':tournaments})
 
 
@@ -87,16 +85,13 @@ def select_winner(request:HttpRequest, match_id):
 
 
 def generate_next_round(tournament, in_round):
-    # Retrieve the winners of the current round
     round_matches = Match.objects.filter(tournament=tournament, in_round=in_round)
     winners = [match.winner for match in round_matches]
 
-    rounds = in_round - 1  # change the round number for the next round
+    rounds = in_round - 1  
 
-    # Create new matches for the next round
     new_matches = []
     for i in range(0, len(winners), 2):
-        # Ensure there are at least two winners left to create a match
         if i + 1 < len(winners):
             match = Match.objects.create(
                 tournament=tournament,
@@ -166,8 +161,4 @@ def enroll_view(request : HttpRequest,tournament_id):
                     match = Match.objects.create(tournament=tournament, player1=players1, player2=players2, in_round=rounds)
                     matches.append(match)
 
-            return redirect('tournament:tournament_view')
-
-
-
-    
+        return redirect('tournament:show_tournament_details', tournament_id)

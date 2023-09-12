@@ -31,8 +31,12 @@
                                 <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn btn-primary disabled-2">Full</a>
                                 {% endif %}
                             {% endif %}
+                        {% elif profile_user.states == '2' %}
+                            {% if tournament.owner.user == request.user %}
+                            <a href="#control" class="btn btn-primary mt-2">Control you Tournament </a>
+                            {% endif %}
                         {% else %}
-                                <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to enroll</a>
+                            <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to enroll</a>
                         {% endif %}
                     {% endif %}
                 
@@ -40,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="control">
         {% if matches %}
             <ul style="color: #FEC53A;display: flex;flex-direction: column-reverse;">
                 {% for match in matches %}
