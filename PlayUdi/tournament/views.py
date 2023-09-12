@@ -34,6 +34,7 @@ def create_tournament(request : HttpRequest):
         # Get the number of players from the form
         num_players = request.POST['number_of_players'] 
         name= request.POST['name']
+        description= request.POST['description']
         game= int(request.POST['game'])
         trophy_for_tournament= int(request.POST['trophy_for_tournament'])
         profile=Profile.objects.get(user=request.user)
@@ -41,7 +42,7 @@ def create_tournament(request : HttpRequest):
         if profile.states =='1':
             return HttpResponse("Youre not Allowed to create a tour")
         # Create a new tournament
-        tournament = Tournament.objects.create(name=name , number_of_players=num_players,owner=profile,game=game,trophy_for_tournament=trophy_for_tournament, winner=None)
+        tournament = Tournament.objects.create(name=name , number_of_players=num_players,owner=profile,game=game,trophy_for_tournament=trophy_for_tournament,description=description, winner=None)
         return redirect('tournament:tournament_view')
     return render(request, 'tournament/create_tournament.html',{'Tournament':Tournament})
 
@@ -72,9 +73,10 @@ def select_winner(request:HttpRequest, match_id):
                 winner.user_rank = 'pro'
             else:
                 winner.user_rank = 'nor'
+
             trophy.save()
             winner.save()
-            return redirect('tournament:show_tournament_details',tournament_id=match.tournament.id)
+            return redirect('tournament:tournament_view')
         if not round_matches:
             generate_next_round(tournament, match.in_round)
             
@@ -112,14 +114,18 @@ def show_tournament_details(request:HttpRequest, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)
     tournament_player = TournamentPlayers.objects.filter(tournament=tournament)
     matches = Match.objects.filter(tournament=tournament)
-    comment = Comment.objects.filter(tournament=tournament)
-    profile_user = Profile.objects.get(user=request.user)
+    comments = Comment.objects.filter(tournament=tournament)
+    profile_user = Profile.objects.filter(user=request.user).first()
+    trophy = Trophy.objects.filter(tournament=tournament).first()
 
     if request.method == "POST" and request.user.is_authenticated:
         new_comment = Comment(tournament=tournament, profile=profile_user, content=request.POST["content"])
         new_comment.save()
     match_len = matches.count()
-    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comment,"tournament_player":tournament_player})
+    player_exist = TournamentPlayers.objects.filter(tournament=tournament,player=profile_user).exists()
+
+    
+    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comments,"tournament_player":tournament_player, "profile_user":profile_user, "player_exist":player_exist, "trophy":trophy})
 
 
 
