@@ -22,10 +22,6 @@ class Profile(models.Model):
     def __str__(self) -> str:
         return f"{self.user}"
 
-
-
-
-
 class Tournament(models.Model):
     user_choices = ((4, "4"), (8, "8"),(16,'16'),(32,'32'))
     user_choices_games = ((1, "Chess"), (2, "Takken"),(3,'x&o'),(4,'Call Of Duty'),(5,'FIFA24'))
@@ -34,7 +30,7 @@ class Tournament(models.Model):
     name = models.CharField(max_length=100)
     number_of_players = models.IntegerField(choices=user_choices, default=1)
     game = models.IntegerField(choices=user_choices_games, default=1)
-    trophy_for_tournament = models.IntegerField(choices=user_choices_trophy, default=1000)
+    trophy_for_tournament = models.IntegerField(choices=user_choices_trophy, default=100)
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owned_tournaments')
     winner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='won_tournament', null=True, blank=True, default=None)
 
