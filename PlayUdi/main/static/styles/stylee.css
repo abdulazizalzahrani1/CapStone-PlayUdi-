@@ -330,6 +330,7 @@ ul.navbar li a:hover:not(.active) {
   height: 50vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.767), rgba(0, 0, 0, 0.712)),
     url(../images/flame.jpg);
+
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -377,6 +378,54 @@ ul.navbar li a:hover:not(.active) {
   background: url(../images/aiper.jpg);
   background-size: cover;
   background-position: center;
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.section-2 h1{
+    font-size: 2rem;
+    color: #fff;
+    margin: 20px 0;
+}
+.players{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.p-image-1{
+    background: url("{{trophy.winner.avatar.url}}");
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    position: relative;
+}
+.p-image-1::after{
+    position: absolute;
+    right: -35px;
+    bottom: 0;
+    font-size: 2rem;
+    color: #FEC53A;
+}
+.players span{
+    font-size: 1.5rem;
+    color: #FEC53A;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.stars{
+    color: #FEC53A;
+}
+.p-image-2{
+    background: url(../images/aiper.jpg);
+    background-size: cover;
+    background-position: center;
+
 }
 
 .p-image-2 {
@@ -553,6 +602,9 @@ ul li a:hover {
   padding: 15px 0 40px;
 }
 
+.players:hover{
+    scale: 0.9;
+}
 /* ================================= */
 
   

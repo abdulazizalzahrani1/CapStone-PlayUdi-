@@ -8,6 +8,9 @@ def trophy_view(request: HttpRequest) -> HttpResponse:
     trophies = Trophy.objects.all()
     return render(request, 'trophy/trophies.html', {"trophies":trophies})
 
+
+
+
 def add_trophy_view(request: HttpRequest) -> HttpResponse:
 
     if request.method == 'POST':
