@@ -41,6 +41,3 @@ def fifa_view(request: HttpRequest):
     fifa_tournaments = Tournament.objects.filter(game=5)
     return render(request, 'main/games/fifa.html', {"fifa_tournaments":fifa_tournaments})
 
-def error_view(request: HttpRequest, error, profile):
-
-    return render(request, 'main/error_page.html', {"error", error})
