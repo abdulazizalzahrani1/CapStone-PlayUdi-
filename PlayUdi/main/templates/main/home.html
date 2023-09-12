@@ -13,8 +13,7 @@
             winner of all TIme.</p>
         <p>Our Top Players are waiting for your challenge, click the 
             button below to get started.</p>
-            <button id="btn2">Challenge best players Now</button>
-
+            <a href="{% url 'tournament:tournament_view'%}" style="text-decoration: none;"><button  id="btn2">Challenge best players Now</button></a>
         </div>
     
     <div class="rakuto"></div>
@@ -45,14 +44,18 @@
 </section>
 
 <!-- New section is down here below -->
+<div class="logoo-section">
+    <i class="fas fa-gamepad"></i>
+    <h1>Top players</h1>
+    </div>
 
 <section class="section-2" style="padding-top: 25px;">
-<h1>Top Players</h1>
+
 {%for pro in profile%}
 <div class="players">
     <a href="{% url 'accounts:profile_page' pro.user.id %}">
-    <img src="{{pro.avatar.url}}" style="width: 160px;
-    height: 160px;
+    <img src="{{pro.avatar.url}}" style="width: 100px;
+    height: 100px;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
@@ -65,30 +68,22 @@
 </section>
 <div class="logoo-section">
     <i class="fas fa-gamepad"></i>
-    <h2>What People say About us</h2>
+    <h2>   Tournaments</h2>
     </div>
 <div class="section-3">
 <div class="section-3-wrapper">
-    <div class="feedback"></div>
+    {% for tournament in tournament %}
+    {% if tournament.game == 1 %}<img src="/static/images/games/chess.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;">{% elif tournament.game == 2 %}<img src="/static/images/games/takken.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;">{% elif tournament.game == 3 %}<img src="/static/images/games/xo.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;">{% elif tournament.game == 4 %}<img src="/static/images/games/cod.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;">{% elif tournament.game == 5 %}<img src="/static/images/games/fifa.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;">{%endif%}
+    <a href="{% url 'tournament:show_tournament_details' tournament.id %}" style="text-decoration: none;">
     <div class="feedback-desc">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum delectus error, 
-        tempora laborum, voluptas magnam animi quo repudiandae asperiores 
-        totam dolore commodi perspiciatis sapiente accusamus alias non vitae incidunt nisi!</p>
+        <p>{{tournament.description}}</p>
         <br>
         <i class="far fa-grin-squint-tears"></i><br>
-        <h4>OSCAR</h4>
+        <h4>{{tournament.get_game_display}}</h4>
     </div>
+    </a>
+    {%endfor%}
     <!-- =========================== -->
-    <div class="feedback f-img-2"></div>
-    <div class="feedback-desc">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum delectus error, 
-        tempora laborum, voluptas magnam animi quo repudiandae asperiores 
-        totam dolore commodi perspiciatis sapiente accusamus alias non vitae incidunt nisi!</p>
-        <br>
-        <i class="far fa-grin-beam-sweat"></i><br>
-        <h4>MARIO</h4>
-    </div>
-    </div>
 </div>
 </div>
 
