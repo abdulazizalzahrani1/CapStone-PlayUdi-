@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1 style="color:#fec53a ; text-align: center; margin-top: 100px; margin-bottom:50px ; ">Create a New Tournament</h1>
-<form method="post" style="width: 800px; margin-left: 20%; margin-bottom: 300px;">
+<form method="post" style="width: 800px; margin-left: 25%; margin-bottom: 300px;">
     {% csrf_token %}
     <input type="text" name="name" class="form-control mt-2 " placeholder="Tournament Name" value="{{request.user}} Tourmnet "/>
     <input type="text" name="description" class="form-control mt-2 " placeholder="Tournament description" value="{{request.user}} Tourmnet description "/>
