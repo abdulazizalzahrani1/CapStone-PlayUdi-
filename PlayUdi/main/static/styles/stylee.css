@@ -676,7 +676,6 @@ ul li a:hover {
   position: relative;
 }
 .about-list label:after {
-  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
