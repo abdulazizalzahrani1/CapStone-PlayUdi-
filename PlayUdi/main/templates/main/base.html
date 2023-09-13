@@ -15,7 +15,7 @@
     </head>
       <body style="background-color:#1a0327;">      
             <header>
-              <a href="{% url "main:home_view" %}">
+              <a href="{% url 'main:home_view' %}">
                 <div class="logo align-items-end">
                     <i class="fas fa-gamepad"></i>
                     <p style="font-weight: bold;">PlayUdi</p>
@@ -70,10 +70,10 @@
                         </div>
                         
                           </ul>
-                          <a href="{% url 'tournament:tournament_view'%}">
-                          <button type="button" id="btn"><i class="fas fa-play"></i>PLAY NOW</button>
-                        </a>
-
+              </div>
+              <a style="position: relative;" href="{% url 'tournament:tournament_view'%}">
+                <button type="button" id="btn"><i class="fas fa-play"></i>PLAY NOW</button>
+              </a>
             </header>
 
           {% block content %}
