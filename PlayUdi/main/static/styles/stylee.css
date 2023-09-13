@@ -569,9 +569,6 @@ ul li a:hover {
     background: linear-gradient(-45deg,#571845 , #c70039);
     margin-top: 20px;
     width: 25%;
-
-
-
 }
 .sidebarss{
     display: flex;
@@ -620,7 +617,8 @@ ul li a:hover {
     background-color: #f5f5f5;
 }
 .imgProfile {
-    max-width: 100%;
+    width: 70cqh;
+    height: 85cqh;
     border-radius: 20px;
     box-shadow:0 0 30px rgb(197 40 40 / 26%);
 }
@@ -699,7 +697,13 @@ ul li a:hover {
     margin-top: 30px;
   }
 }
+.counter{
+  align-items: center;
 
+
+  
+  
+}
 .about-section .counter {
   padding: 22px 20px;
   background: #ffffff;
@@ -771,7 +775,7 @@ ul li a:hover {
     top: 25%;
     bottom: 25%;
     left: 100%;
-    right: -10px;
+    right: -40px;
     border-top: 1px solid red;
     border-bottom: 1px solid red;
     border-right: 1px solid red;
@@ -781,13 +785,15 @@ ul li a:hover {
     content: "";
     position: absolute;
     top: calc(50% - 5px);
-    left: 10px;
+    left: 50px;
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-left: 5px solid red;
   }
+  
+
 
   @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap');
 
@@ -883,7 +889,7 @@ a:hover {
 .link-custom {
     font-weight: 700;
     position: relative;
-    margin-left: 14px;
+    margin-left: 1px;
 }
 
 .link-custom::after {

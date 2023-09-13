@@ -14,12 +14,12 @@
                 <h3 style="color: #FEC53A;">{{ tournament.name }}</h3>
                 <p style="color: beige;">{{tournament.description}}</p>
                 <p style="color: beige;">{{tournament.trophy__for_tournament__display}}</p>
-                <p style="color: beige;">there are {{tournament.number_of_players}} player/s left.</p>
+                <p class="m-4" style="color: beige;">there are {{tournament.number_of_players}} player/s left.</p>
             </div>
             <div class="col-3">
                 <div class="row d-flex flex-column">
                     {% if trophy %}
-                        <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-primary disabled mt-2">{{trophy.winner.user.username}} is the winner </a>
+                        <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-success disabled mt-2">{{trophy.winner.user.username}} is the winner </a>
                     {% else %}
                         {% if profile_user.states == '1' %}
                             {% if player_exist %}
@@ -31,8 +31,12 @@
                                 <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn btn-primary disabled-2">Full</a>
                                 {% endif %}
                             {% endif %}
+                        {% elif profile_user.states == '2' %}
+                            {% if tournament.owner.user == request.user %}
+                            <a href="#control" class="btn btn-primary mt-2">Control you Tournament </a>
+                            {% endif %}
                         {% else %}
-                                <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to enroll</a>
+                            <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to enroll</a>
                         {% endif %}
                     {% endif %}
                 
@@ -40,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="control">
         {% if matches %}
             <ul style="color: #FEC53A;display: flex;flex-direction: column-reverse;">
                 {% for match in matches %}
@@ -49,8 +53,8 @@
                     <div class="container grid">
                         <div class="round">
                             <div class="round">
-                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player1.avatar.url}});"><div class="m-3" style="background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player1.user.username }}</div></div>
-                                <div class="link"></div>
+                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player1.avatar.url}});"><div class="m-3" style=" display: flex;justify-content: start; background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player1.user.username }}</div></div>
+                                <div  class="link"></div>
                                 <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player2.avatar.url}});"><div class="m-3" style="background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player2.user.username }}</div></div>
                             </div>
                         </div>
@@ -60,16 +64,18 @@
                     {% if match.tournament.owner.user == request.user %}
                     <form method="post" action="{% url 'tournament:select_winner' match.id %}">
                         {% csrf_token %}
-                        <label for="winner">Select Winner:</label>
-                        <select name="winner">
-                            <option style="background:#FEC53A;" value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
+                        <label style="margin-left: 85px;" for="winner">Select Winner:</label>
+                        <select style="margin-left: 91px;" name="winner">
+                            <option value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
                             <option value="{{ match.player2.user.id }}">{{ match.player2.user.username }}</option>
                         </select>
-                        <button  type="submit">Submit Winner</button>
+                        <button style="margin-left: 80px;"  type="submit">Submit Winner</button>
                     </form>
                     {%endif%}
                 {% else %}
-                    <div class="rounded"style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success m-3" style="width: fit-content; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;">{{ match.winner.user.username }}</div></div>
+                <div style="margin-left:50px">
+                    <div class="rounded"style=" display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success " style="width: 100%; position: relative; top: -150px; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;">{{ match.winner.user.username }}</div></div>
+                </div>
                 {% endif %}
             </li>
             {% endfor %}
@@ -98,7 +104,11 @@
             <form action="{% url 'tournament:show_tournament_details' tournament.id %}" method="post" >
                 {% csrf_token %}
                 <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+                {% if profile_user.states == '1' %}
                 <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+                {% else %}
+                <a href="{% url 'accounts:login_user_view' %}" class="btn btn-primary mt-2">Login as player to add comments</a>
+                {% endif %}
             </form>
         </div>
         <nav class="sidebarss">
@@ -108,7 +118,7 @@
                         <div  class="row d-flex" style="flex-direction: column-reverse;">
                             {% for comment in comments %}
                     <div>
-                            <div style="border-radius: 20px; background-color:rgb(59, 59, 59);" class="d-flex flex-column gap-1 p-4 mt-3">
+                            <div style="border-radius: 20px; background-color:rgb(58, 59, 59);" class="d-flex flex-column gap-1 p-4 mt-3">
                                 <div class="d-flex gap-3">
                                     <img src="{{comment.profile.avatar.url}}" width="40px" height="35px" style="border-radius: 50%;" class="rounded">
                                     <h5 style="color: #FEC53A;" >@{{comment.profile.user.username}}</h5>
