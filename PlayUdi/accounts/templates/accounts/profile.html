@@ -3,16 +3,20 @@
 {% block title %} User Profile {% endblock%}
 
 {% block content %}
-<div class="profileBody container ">
+<h1 style="display: flex; justify-content: center; margin-top: 20px;">Profile</h1>
+
+<div style="margin-top: -55px;" class="profileBody container ">
+  
     <section class="sectionProfile about-section " id="about">
+      
     <div class="container">
     <div class="row align-items-center flex-row">
         <div class="col-lg-5 py-3">
             <div class="about-avatar">
-            <img class="imgProfile" src="{{profile.avatar.url}}" title="" alt="">
+            <img class="imgProfile" style="width: 320px; height: 300px;" src="{{profile.avatar.url}}" title="" alt="">
             </div>
             </div>
-    <div class="col-lg-6">
+    <div style="margin-left: -85px;" class="col-lg-6">
     <div class="about-text go-to">
     <h3 class="dark-color">About Me</h3>
     <h6 class="theme-color lead">{{profile.user.username}} </h6>
@@ -40,8 +44,7 @@
       </div>
     </div>
     </div>
-    </div>
-   
+  </div>
     </div>
     
     <div class="ps-5 counter ">
@@ -97,10 +100,6 @@
                 <p style="word-wrap: break-word;color: aliceblue; " class="mt-4 mb-2"><strong>Points:</strong> {{ trophy.points }}</p>
                 <p style="word-wrap: break-word; color: aliceblue;" class="mt-4 mb-2"><strong>The winner is:</strong> {{ trophy.winner.user.username }}</p>
     
-                <div style="padding: 10px;" >
-                      <a href="#" class="btn btn-warning">Play Now!</a>
-                  
-    </div>
               </div>
             </div>
             {% endfor %}
