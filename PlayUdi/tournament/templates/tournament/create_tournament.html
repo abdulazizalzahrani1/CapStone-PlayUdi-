@@ -2,26 +2,26 @@
 {% block title %}Create Tournament{% endblock %}
 
 {% block content %}
-<h1>Create a New Tournament</h1>
-<form method="post">
+<h1 style="color:#fec53a ; text-align: center; margin-top: 100px; margin-bottom:50px ; ">Create a New Tournament</h1>
+<form method="post" style="width: 800px; margin-left: 25%; margin-bottom: 300px;">
     {% csrf_token %}
     <input type="text" name="name" class="form-control mt-2 " placeholder="Tournament Name" value="{{request.user}} Tourmnet "/>
     <input type="text" name="description" class="form-control mt-2 " placeholder="Tournament description" value="{{request.user}} Tourmnet description "/>
     
     <br>
-    <label>Game:  </label>
+    <label class="text-light">Game:  </label>
     <select name="game" class="form-select">
         {% for value, x in Tournament.user_choices_games %}
             <option value="{{value}}">{{x}}</option>
         {% endfor %}
     </select>
-    <label>Trophy:  </label>
+    <label class="text-light">Trophy:  </label>
     <select name="trophy_for_tournament" class="form-select">
         {% for value, x in Tournament.user_choices_trophy %}
             <option value="{{value}}">{{x}}</option>
         {% endfor %}
     </select>
-    <label>Number of players :  </label>
+    <label class="text-light">Number of players :  </label>
     <select name="number_of_players" class="form-select">
         {% for value, x in Tournament.user_choices %}
             <option value="{{value}}">{{x}}</option>
@@ -29,6 +29,6 @@
     </select>
     <br>
     
-    <button type="submit">Create Tournament</button>
+    <button type="submit" class="btn btn-primary">Create Tournament</button>
 </form>
 {% endblock %}

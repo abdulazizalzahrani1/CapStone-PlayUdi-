@@ -621,11 +621,14 @@ ul li a:hover {
     height: 85cqh;
     border-radius: 20px;
     box-shadow:0 0 30px rgb(197 40 40 / 26%);
+    
 }
 .imgProfile {
     vertical-align: middle;
     border-radius: 20px;
     border-style: none;
+    max-height: 400px;
+    
 }
 /* About Me 
 ---------------------*/
