@@ -12,13 +12,18 @@
     <div class="containerrr">
         <div class="row pb-4" data-aos="fade-up">
       
+            {% if request.user.profile.states == '2' %}
+            <div style="display: flex;justify-content: start; height: fit-content;">
+            <a style="  color: #fec53a; width: 25%; height: 50%;" href="{% url 'tournament:create_tournament' %}" class="btn btn-primary" >Create Tournament</a>
         </div>
+            {% endif %}
+        </div>
+        
         <div class="row gy-4">
 
 
-
             {% for tournament in tournaments %}
-            <div class="col-4 h-100" data-aos="fade-up" data-aos-delay="300" >
+            <div class="col-4 h-100" data-aos="fade-up" data-aos-delay="300"  >
                 <div class="service p-4 bg-base rounded-4 shadow-effect " style="height: max-content;">     
                             {% if tournament.game == 1 %}
                             <img src="/static/images/games/chess.png"  class="card-img-top" style="height: 432px; width: 100%;">
@@ -64,11 +69,12 @@
             </div>
         </div>
         {% endfor %}
-        {% if request.user.profile.states == '2' %}
-        <a href="{% url 'tournament:create_tournament' %}" class="btn btn-primary">Create Tournament</a>
-        {% endif %}
+       
     </div>
+    
     </div>
+    
 
 </section>
+
 {% endblock %}
