@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h1 style="display: flex; justify-content: center; margin-top: 10px;">Trophies</h1>
+<h1 style="display: flex; justify-content: center; margin-top: 10px;">Trophies Winners</h1>
 
 <section id="services" class="full-height px-lg-5">
   <div class="containerrr">
@@ -15,7 +15,7 @@
   <div class="col-4 h-100" data-aos="fade-up" data-aos-delay="300" style="margin-top: -20px;">
     <div class="service p-4 bg-base rounded-4 shadow-effect " style="height: max-content;">     
           {%if trophy.tournament.trophy_for_tournament >= 300%}
-          <img src="/static/images/gold.jpg" width="100px" height="300px" class="card-img-top"> 
+          <img src="/static/images/gold.jpg" width="100px" height="300px" class="card-img-top">
           {%elif trophy.tournament.trophy_for_tournament >= 200%}
           <img src="/static/images/silver.jpg" width="100px" height="300px" class="card-img-top">
            {%elif trophy.tournament.trophy_for_tournament < 200 %}
