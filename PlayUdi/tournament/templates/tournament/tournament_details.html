@@ -14,9 +14,13 @@
                 <h3 style="color: #FEC53A;">{{ tournament.name }}</h3>
                 <p style="color: beige;">{{tournament.description}}</p>
                 <p style="color: beige;">{{tournament.trophy__for_tournament__display}}</p>
-                <p class="m-4" style="color: beige;">there are {{tournament.number_of_players}} player/s left.</p>
-                {% if tournament.number_of_players == 0 and not trophy  %}
-                <div class="alert alert-light alert-dismissible fade show  mt-2">
+                {% if tournament.number_of_players != 0 %}
+                <p style="color: beige;">there are {{tournament.number_of_players}} player/s left.</p>
+                {% elif trophy %}
+                <p style="color: beige;">Players are ready to play</p>
+                {% endif %}
+                {% if tournament.number_of_players == 0 and profile_user.states == '1' and not trophy %}
+                <div class="alert alert-light alert-dismissible fade show">
                     <strong>Be Ready</strong> The game will start in few seconds
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>  
