@@ -15,17 +15,19 @@
     </head>
       <body style="background-color:#1a0327;">      
             <header>
-                <div class="logo">
+              <a href="{% url "main:home_view" %}">
+                <div class="logo align-items-end">
                     <i class="fas fa-gamepad"></i>
                     <p style="font-weight: bold;">PlayUdi</p>
                 </div>
-                <ul style="display: flex;justify-content: start;" class="navbar navbar-expand-lg">
+              </a>
+                <ul style="display: flex;justify-content: start;" class="navbar navbar-expand-lg w-100">
                     <div class="container-fluid">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                           <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarScroll">
-                          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px; align-items: center;">
+                          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll text-center" style="--bs-scroll-height: 100px; align-items: center;">
                             <li class="nav-item">
                               <a class="nav-link" aria-current="page" href="{% url 'main:home_view'%}">Home</a>
                             </li>
@@ -38,16 +40,17 @@
                             {% if request.user.is_authenticated%}
                             <li class="nav-item dropdown">
                               <a  class="nav-link dropdown-toggle " style="color: #fff;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Account
+                              {% if request.user.is_superuser %}
+                              Admin
+                              {% else %}
+                              {{request.user.username}}
+                              {% endif %}
                               </a>
                               <ul  class="dropdown-menu bg-black">
                                 {% if not request.user.is_staff%}
                                 <li><a class="dropdown-item" href="{% url 'accounts:profile_page' request.user.id %}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'accounts:update_profile_page' request.user.id %}">Update Profile</a></li>
                                 {%endif%}
-                                {% if request.user.is_staff %}
-                                <li><a class="dropdown-item" href="{% url 'trophy:trophy_view' %}">Trophy</a></li>
-                                {% endif %}
                                 {% if request.user.is_superuser %}
                                 <li><a class="dropdown-item" href="{% url 'accounts:user_admin_view' %}">admin page</a></li>
                                 {% endif %}
