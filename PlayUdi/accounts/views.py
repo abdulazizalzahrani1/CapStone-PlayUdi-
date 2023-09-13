@@ -69,7 +69,7 @@ def profile_page(request:HttpRequest, user_id):
     profile = Profile.objects.get(user__id=user_id)
 
     matches = Match.objects.filter(player1=profile).count()
-    matches = Match.objects.filter(player2=profile).count()
+    matches += Match.objects.filter(player2=profile).count()
 
     trophies = Trophy.objects.filter(winner=profile)
 
