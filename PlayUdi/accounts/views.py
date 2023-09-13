@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.models import User
-from tournament.models import Profile, Trophy, Tournament
+from tournament.models import Profile, Trophy, Tournament, Match
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -68,11 +68,14 @@ def profile_page(request:HttpRequest, user_id):
 
     profile = Profile.objects.get(user__id=user_id)
 
+    matches = Match.objects.filter(player1=profile).count()
+    matches = Match.objects.filter(player2=profile).count()
+
     trophies = Trophy.objects.filter(winner=profile)
 
 
 
-    return render(request, "accounts/profile.html", {"profile" : profile, "trophies":trophies})
+    return render(request, "accounts/profile.html", {"profile" : profile, "trophies":trophies,"matches":matches})
 
 
 
