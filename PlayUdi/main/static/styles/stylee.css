@@ -785,13 +785,15 @@ ul li a:hover {
     content: "";
     position: absolute;
     top: calc(50% - 5px);
-    left: 0px;
+    left: 50px;
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-left: 5px solid red;
   }
+  
+
 
   @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap');
 

@@ -53,8 +53,8 @@
                     <div class="container grid">
                         <div class="round">
                             <div class="round">
-                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player1.avatar.url}});"><div class="m-3" style="background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player1.user.username }}</div></div>
-                                <div class="link"></div>
+                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player1.avatar.url}});"><div class="m-3" style=" display: flex;justify-content: start; background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player1.user.username }}</div></div>
+                                <div  class="link"></div>
                                 <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player2.avatar.url}});"><div class="m-3" style="background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player2.user.username }}</div></div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                     {%endif%}
                 {% else %}
                 <div style="margin-left:50px">
-                    <div class="rounded"style=" width: 150%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success " style="width: 100%; position: relative; top: -155px; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;"> THE WINNER IS {{ match.winner.user.username }}</div></div>
+                    <div class="rounded"style=" display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success " style="width: 100%; position: relative; top: -150px; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;">{{ match.winner.user.username }}</div></div>
                 </div>
                 {% endif %}
             </li>
@@ -118,7 +118,7 @@
                         <div  class="row d-flex" style="flex-direction: column-reverse;">
                             {% for comment in comments %}
                     <div>
-                            <div style="border-radius: 20px; background-color:rgb(59, 59, 59);" class="d-flex flex-column gap-1 p-4 mt-3">
+                            <div style="border-radius: 20px; background-color:rgb(58, 59, 59);" class="d-flex flex-column gap-1 p-4 mt-3">
                                 <div class="d-flex gap-3">
                                     <img src="{{comment.profile.avatar.url}}" width="40px" height="35px" style="border-radius: 50%;" class="rounded">
                                     <h5 style="color: #FEC53A;" >@{{comment.profile.user.username}}</h5>

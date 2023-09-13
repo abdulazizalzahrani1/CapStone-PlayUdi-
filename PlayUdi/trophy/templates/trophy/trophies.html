@@ -6,7 +6,7 @@
 <h1 style="display: flex; justify-content: center; margin-top: 10px;">Trophies</h1>
 
 <section id="services" class="full-height px-lg-5">
-  <div  class="containerrr">
+  <div class="containerrr">
     <div  class="row pb-4" data-aos="fade-up">
     </div>
     <div class="row gy-4">
@@ -25,11 +25,15 @@
             <p style="word-wrap: break-word;color: aliceblue; " class="mt-4 mb-2"><strong>Points:</strong> {{ trophy.points }}</p>
             <p style="word-wrap: break-word; color: aliceblue;" class="mt-4 mb-2"><strong>The winner is:</strong> {{ trophy.winner.user.username }}</p>
 
-
+            <div style="padding: 10px;" >
+                  <a href="#" class="btn btn-warning">Play Now!</a>
+              
+</div>
           </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
+        {% endfor %}
 
+      </div>
+
+</section>
 {% endblock%}
