@@ -151,26 +151,8 @@ ul.navbar li a:hover:not(.active) {
   background-position: center;
   position: relative;
 }
-.rakuto::before {
-  content: "";
-  width: 160px;
-  height: 160px;
-  background-position: center;
-  background-size: cover;
-  position: absolute;
-  top: 10px;
-  left: 200px;
-}
-.rakuto::after {
-  content: "";
-  width: 400px;
-  height: 400px;
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  bottom: 0px;
-  left: -150px;
-}
+
+
 .logoo-section {
   display: flex;
   align-items: center;
