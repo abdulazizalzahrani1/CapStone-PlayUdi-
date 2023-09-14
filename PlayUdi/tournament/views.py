@@ -118,8 +118,14 @@ def show_tournament_details(request:HttpRequest, tournament_id):
     match_len = matches.count()
     player_exist = TournamentPlayers.objects.filter(tournament=tournament,player=profile_user).exists()
 
+    rounds:dict = {}
+    for match in matches:
+        round_number = match.in_round
+        if round_number not in rounds:
+            rounds[round_number] = []
+        rounds[round_number].append(match)
     
-    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comments,"tournament_player":tournament_player, "profile_user":profile_user, "player_exist":player_exist, "trophy":trophy})
+    return render(request, 'tournament/tournament_details.html', {'tournament': tournament, 'matches': matches, "match_len":match_len, "comments":comments,"tournament_player":tournament_player, "profile_user":profile_user, "player_exist":player_exist, "trophy":trophy, "rounds":rounds})
 
 
 

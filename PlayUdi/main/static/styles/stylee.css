@@ -993,3 +993,40 @@ a:hover {
     background-color: #ebeff8;
     color: #8D8D8D;
 }
+.r-arrow {
+    position: absolute;
+    left: 75%;
+    top: 110%;
+    right: -15px;
+    height: 15px;
+    border-bottom: 4px solid red;
+    border-left: 4px solid red;
+    border-radius: 0 0 0 10px ;
+
+  }
+
+.r-arrow::before {
+    content: "";
+    position: absolute;
+    left: 102%;
+    width: 0;
+    height: 0;
+    bottom: -15px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid red;
+    transform: rotate(90deg);
+}
+.l-arrow {
+    position: absolute;
+    left: -14px;
+    top: 110%;
+    right: 75%;
+    height: 15px;
+    border-bottom: 4px solid red;
+    border-right: 4px solid red;
+    border-radius: 0 0 10px 0;
+
+  }
+
+

@@ -30,10 +30,12 @@
 
 
             </div>
-            <div class="col-3">
-                <div class="row d-flex flex-column">
+            <div class="col-3 d-flex justify-content-end">
+                <div class=" row d-flex flex-column w-75">
                     {% if trophy %}
-                        <a href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-success disabled mt-2">{{trophy.winner.user.username}} is the winner </a>
+                        <a style="display: grid;justify-content: center;" href="{% url 'tournament:enroll_view' tournament.id %}" class="btn  btn-success disabled mt-2"> <img style="width: 80px;" src="{{ trophy.winner.avatar.url }}" class="rounded m-auto"> {{trophy.winner.user.username}} is the winner </a>
+                        
+
                     {% else %}
                         {% if profile_user.states == '1' %}
                             {% if player_exist %}
@@ -59,62 +61,79 @@
             </div>
         </div>
         <div class="row" id="control">
-        {% if matches %}
-            <ul style="color: #FEC53A;display: flex;flex-direction: column-reverse;">
-                {% for match in matches %}
-                <li>
-                    <p style="color: #FEC53A;font-weight: bold;">Round {{ match.in_round }}</p>
-                    <div class="container grid">
-                        <div class="round">
-                            <div class="round">
-                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player1.avatar.url}});"><div class="m-3" style=" display: flex;justify-content: start; background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player1.user.username }}</div></div>
-                                <div  class="link"></div>
-                                <div class="m-2 rounded" style=" width: 86%; display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.player2.avatar.url}});"><div class="m-3" style="background-color: black; opacity: 75%;border-radius: 0.375rem;">{{ match.player2.user.username }}</div></div>
+{% if rounds %}
+    {% for round_number, round_matches in rounds.items %}
+        <h2></h2>
+        <h1></h1>
+        <p></p>
+        <div class="row">
+            {% for match in round_matches %}
+                <div class="col mb-4">
+                    <div style="background:black !important ;opacity: 75%; border: solid #FEC53A !important;" class="card">
+                        <div class="card-body  text-center">
+                            <h5 style="  color: #fec53a;" class="card-title text-center">
+                                {{ match.player1.user.username }}
+                                <span style="    color: beige !important;" class="text-muted"> vs </span>
+                                {{ match.player2.user.username }}
+                            </h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="{{ match.player1.avatar.url }}" class="img-fluid rounded" alt="{{ match.player1.user.username }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{{ match.player2.avatar.url }}" class="img-fluid rounded" alt="{{ match.player2.user.username }}">
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                {% if not match.winner %}
+                                    {% if match.tournament.owner.user == request.user %}
+                                        <form method="post" action="{% url 'tournament:select_winner' match.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="winner">Select Winner:</label>
+                                                <select class="form-control" name="winner">
+                                                    <option value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
+                                                    <option value="{{ match.player2.user.id }}">{{ match.player2.user.username }}</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit Winner</button>
+                                        </form>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="alert alert-success">
+                                        Winner: {{ match.winner.user.username }}
+                                    </div>
+                                    {% endif %}
+                                        {% if round_number <= rounds|length and round_number != 1 %}
+                                        {% if forloop.counter|divisibleby:2  %}
+                                            <div class="l-arrow"></div>
+                                            {% else %}
+                                            <div class="r-arrow"></div>
+                                            {% endif %}
+                                    {% endif %}
                             </div>
                         </div>
-
-
-                {% if not match.winner %}
-                    {% if match.tournament.owner.user == request.user %}
-                    <form method="post" action="{% url 'tournament:select_winner' match.id %}">
-                        {% csrf_token %}
-                        <label style="margin-left: 85px;" for="winner">Select Winner:</label>
-                        <select style="margin-left: 91px;" name="winner">
-                            <option value="{{ match.player1.user.id }}">{{ match.player1.user.username }}</option>
-                            <option value="{{ match.player2.user.id }}">{{ match.player2.user.username }}</option>
-                        </select>
-                        <button style="margin-left: 80px;"  type="submit">Submit Winner</button>
-                    </form>
-                    {%endif%}
-                {% else %}
-                <div style="margin-left:50px">
-                    <div class="rounded"style=" display: flex;justify-content: center;align-items: end; height: 155px; background-size: cover;background-repeat: no-repeat; background-image: url({{match.winner.avatar.url}});"><div class="bg-success " style="width: 100%; position: relative; top: -150px; display: flex;justify-content: center;align-items: center;border-radius: 0.375rem;">{{ match.winner.user.username }}</div></div>
+                    </div>
                 </div>
-                {% endif %}
-            </li>
             {% endfor %}
-            {% if tournament.winner %}
-                <h2  class="row justify-content-around">completed</h2>
-            {% endif %}
-        </ol>
-        <hr>
-<br>
-        {% else %} 
-<div class="col">
-        <div class="alert alert-warning alert-dismissible fade show w-50 mt-2">
-            <strong>Wait </strong>Game did't not start by the owner
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button> 
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="col">
+            <div class="alert alert-warning alert-dismissible fade show w-50 mt-2">
+                <strong>Wait </strong>Game did't not start by the owner
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button> 
+            </div>  
+    
+            <ul class="list-group w-50">
+                {% for player in tournament.tournamentplayers_set.all %}
+                <li class="list-group-item" style="background: #282828 !important;color: #FEC53A;">{{ player.player.user.first_name }}</li>
+                {% endfor %}
+            </ul>
         </div>  
-
-        <ul class="list-group w-50">
-            {% for player in tournament.tournamentplayers_set.all %}
-            <li class="list-group-item" style="background: #282828 !important;color: #FEC53A;">{{ player.player.user.first_name }}</li>
-            {% endfor %}
-        </ul>
-    </div>  
-
-
-
+    {% if request.user.profile.states == '2' %}
+        <a href="{% url 'tournament:create_tournament' %}" class="btn btn-primary">Create a tournament</a>
+    {% endif %}
 {% endif %}
 </div>
     </div>

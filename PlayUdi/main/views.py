@@ -16,7 +16,8 @@ def home_view(request: HttpRequest):
     tournament = Tournament.objects.all()[0:2]
     return render(request, "main/home.html",{"trophies":trophy,"profile":profile, "tournament":tournament})
 
-
+def error_view(request: HttpRequest):
+    return render(request, 'main/error_page.html')
 
 
 def chess_view(request: HttpRequest):
