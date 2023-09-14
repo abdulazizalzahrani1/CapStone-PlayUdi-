@@ -10,7 +10,7 @@
             <div class="col-3">
             {% if tournament.game == 1 %}<img src="/static/images/games/chess.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 2 %}<img src="/static/images/games/takken.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 3 %}<img src="/static/images/games/xo.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 4 %}<img src="/static/images/games/cod.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{% elif tournament.game == 5 %}<img src="/static/images/games/fifa.png" style="width: 250px; height: 300px; background-position: center; background-size: cover;border-radius: 0.375rem;">{%endif%}
             </div>
-            <div class="col-5">
+            <div style="margin-left: 25px !important;" class="col-5 m=3">
                 <h3 style="color: #FEC53A;">{{ tournament.name }}</h3>
                 <p style="color: beige;">{{tournament.description}}</p>
                 <p style="color: beige;">{{tournament.trophy__for_tournament__display}}</p>
