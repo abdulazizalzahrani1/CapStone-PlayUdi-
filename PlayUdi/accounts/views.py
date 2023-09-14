@@ -88,6 +88,7 @@ def update_profile_page(request:HttpRequest, user_id):
     profile= Profile.objects.get(user=user)    
     if request.method == "POST":
         profile.birth_date = request.POST["birth_date"]
+        profile.bio = request.POST["bio"]
         if "avatar" in request.FILES:
             profile.avatar = request.FILES["avatar"]
         profile.save()

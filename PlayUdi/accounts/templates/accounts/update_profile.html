@@ -11,6 +11,10 @@
             <input type="date" class="form-control" id="floatingInput" placeholder="Birth Date" name="birth_date" value="{{profile.birth_date.isoformat}}">
             <label for="floatingInput">Birth Date</label>
         </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Bio" name="bio" value="{{profile.bio}}">
+            <label for="floatingInput">Bio</label>
+        </div>
 
         <div class="">
           {% if profile.avatar %}
